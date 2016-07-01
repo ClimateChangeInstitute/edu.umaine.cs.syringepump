@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<meta name="description"
+	content="Syringe pump controller using linear-actuator">
+<meta name="author" content="Mark Royer">
+<link rel="icon" href="../../favicon.ico">
+
+<title>Syringe Pump Controller</title>
+
+<!-- Bootstrap core CSS -->
+<link href="lib/bootstrap-3.3.6-dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="lib/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+<link href="lib/font-awesome-4.6.3/css/font-awesome.css"
+	rel="stylesheet">
+
+<link href="site.css" rel="stylesheet">
+
+
+
+
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Syringe Pump Controller</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<!-- <li class="active"><a href="#">Home</a></li> -->
+					<li><a href="#about" data-toggle="modal" data-target="#about">About</a></li>
+					<li><a href="#contact" data-toggle="modal"
+						data-target="#contact">Contact</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container" style="padding-top: 15px">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="loadAmountSpinner"
+					class="col-xs-12 col-sm-3 form-control-label">Load Amount
+					(ml)</label>
+				<div class="col-xs-12 col-sm-6">
+					<div class="input-group spinner">
+						<input id="loadAmountSpinner" type="text" class="form-control"
+							value="10">
+						<div class="input-group-btn-vertical">
+							<button class="btn btn-default" type="button">
+								<i class="fa fa-caret-up"></i>
+							</button>
+							<button class="btn btn-default" type="button">
+								<i class="fa fa-caret-down"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-3">
+					<button id="loadButton" class="btn btn-default btn-block"
+						type="button">Load Syringe!</button>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="syringeStatus"
+					class="col-xs-12 col-sm-3 form-control-label">Syringe
+					Status</label>
+				<div class="col-xs-12 col-sm-9">
+					<div id="syringeStatus" class="alert alert-info">The syringe
+						is not active.</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="syringeProgress"
+					class="col-xs-12 col-sm-3 form-control-label">Syringe
+					Content (ml)</label>
+				<div class="col-xs-12 col-sm-9">
+					<div class="progress">
+						<div id="syringeProgress"
+							class="progress-bar progress-bar-info progress-bar-striped"
+							role="progressbar" aria-valuenow="0" aria-valuemin="0"
+							aria-valuemax="100" style="width: 0%">0 (0%)</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="unloadTimeSpinner"
+					class="col-xs-12 col-sm-3 form-control-label">Unload Time
+					(min.)</label>
+				<div class="col-xs-12 col-sm-6">
+					<div class="input-group spinner">
+						<input id="unloadTimeSpinner" type="text"
+							class="form-control btn-block" value="30">
+						<div class="input-group-btn-vertical">
+							<button class="btn btn-default" type="button">
+								<i class="fa fa-caret-up"></i>
+							</button>
+							<button class="btn btn-default" type="button">
+								<i class="fa fa-caret-down"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-3">
+					<button id="unloadButton" class="btn btn-default btn-block"
+						type="button">Unload Syringe!</button>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-xs-12" style="text-align: center">
+					<button id="shutdownButton" class="btn btn-danger" type="button">Shutdown
+						Pump</button>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<a id="advancedFeatures" class="col-xs-12" href="#">Advanced
+					features</a>
+			</div>
+
+			<div id="advancedFeaturesContent" style="display: none;">
+
+				<!-- Load time -->
+				<div class="form-group">
+					<label for="loadTimeSpinner"
+						class="col-xs-12 col-sm-3 form-control-label">Load Time
+						(sec.)</label>
+					<div class="col-xs-12 col-sm-6">
+						<div class="input-group spinner">
+							<input id="loadTimeSpinner" type="text"
+								class="form-control btn-block" value="20">
+							<div class="input-group-btn-vertical">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-up"></i>
+								</button>
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-down"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Load time -->
+
+
+
+				<!-- Step per ml -->
+				<div class="form-group">
+					<label for="syringeDiameterSpinner"
+						class="col-xs-12 col-sm-3 form-control-label">Syringe
+						Diameter</label>
+					<div class="col-xs-12 col-sm-6">
+						<div class="input-group spinner">
+							<input id="syringeDiameterSpinner" type="text"
+								class="form-control btn-block" value="15">
+							<div class="input-group-btn-vertical">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-up"></i>
+								</button>
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-down"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Step per ml -->
+
+
+				<!-- pitch per revolution -->
+				<div class="form-group">
+					<label for="pitchPerRevSpinner"
+						class="col-xs-12 col-sm-3 form-control-label">Pitch (# mm
+						/ 1 rev))</label>
+					<div class="col-xs-12 col-sm-6">
+						<div class="input-group spinner">
+							<input id="pitchPerRevSpinner" type="text"
+								class="form-control btn-block" value="0.8">
+							<div class="input-group-btn-vertical">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-up"></i>
+								</button>
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-down"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Pitch per revolution -->
+
+
+				<!-- steps per revolution -->
+				<div class="form-group">
+					<label for="stepsPerRevSpinner"
+						class="col-xs-12 col-sm-3 form-control-label"># Steps / 1
+						rev</label>
+					<div class="col-xs-12 col-sm-6">
+						<div class="input-group spinner">
+							<input id="stepsPerRevSpinner" type="text"
+								class="form-control btn-block" value="200">
+							<div class="input-group-btn-vertical">
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-up"></i>
+								</button>
+								<button class="btn btn-default" type="button">
+									<i class="fa fa-caret-down"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Pitch per revolution -->
+
+				<div class="form-group">
+					<div class="col-xs-12">
+						<p>The amount of millimeters the plunger will move is
+							calculated as shown below.</p>
+						<pre>mm = ml / mlPerRev * pitchPerRev</pre>
+					</div>
+				</div>
+
+			</div>
+		</form>
+	</div>
+	<!-- /.container -->
+
+
+	<!-- About Modal -->
+	<div id="about" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">About</h4>
+				</div>
+				<div class="modal-body">
+					<p>The syringe pump has been developed by Andrei Kurbatov and
+						Mark Royer. Specify the amount to load, and the syringe will fill
+						in roughly 20 seconds. Specify the unload time. For additional
+						options, click on the 'Advanced features' hyperlink.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Contact Modal -->
+	<div id="contact" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Contact</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						If you are having issues, you can ask Andrei Kurbatov ( <a
+							href="akurbatov@maine.edu">akurbatov@maine.edu</a> ) or Mark
+						Royer ( <a href="mroyer@cs.umaine.edu">mroyer@cs.umaine.edu</a> )
+						for help.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Shutdown Modal -->
+	<div id="shutdownModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Shutdown Pump?</h4>
+				</div>
+				<div class="modal-body">
+					<p>
+						Are you sure you want to shutdown the pump? Clicking <strong>OK</strong>
+						will cause the pump to stop all activity and power down.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button id="shutdownConfirmButton" type="button"
+						class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script>
+		window.jQuery
+				|| document
+						.write('<script type="text\/javascript" src="lib/jquery/jquery-2.2.4.min.js"><\/script>')
+	</script>
+	<script type="text/javascript"
+		src="lib/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready()
+		{
+			// Initialize default values
+			$.getJSON("settings.json", function(data) {
+				$('#loadAmountSpinner').val(data.defaultLoadAmount_ml);
+				$('#unloadTimeSpinner').val(data.defaultUnloadTime_min);
+				$('#loadTimeSpinner').val(data.defaultLoadTime_sec);
+				$('#syringeDiameterSpinner').val(data.defaultSyringeDiameter_mm);
+				$('#pitchPerRevSpinner').val(data.defaultPitch_mmPerRev);
+				$('#stepsPerRevSpinner').val(data.defaultStepsPerRevolution);
+			});
+
+			/**
+			@param message Messge to display
+			@param type info, success, warning, danger
+			 */
+			var displayMessage = function(message, type) {
+				$('#syringeStatus').removeClass();
+				$('#syringeStatus').addClass('alert alert-' + type);
+				$('#syringeStatus').text(message);
+			};
+
+			var convertMlToMm = function(mlAmnt) {
+				// Result should be in millimeters
+				// mm = mlAmnt * stepsPerMl * pitchPerRev / stepsPerRev
+
+				// Syringe radius
+				var r = $('#syringeDiameterSpinner').val() / 2.0;
+				var mlPerRev = 3.14159 *  r * r * $('#pitchPerRevSpinner').val();
+				
+				var mm = mlAmnt / mlPerRev 
+						* $('#pitchPerRevSpinner').val();
+
+				return mm;
+			};
+
+			var convertMmToMl = function(mmAmnt) {
+				// Result should be in milliliters
+				// mm = mmAmnt / pitchPerRev * stepsPerRev / stepsPerMl
+
+				// Syringe radius
+				var r = $('#syringeDiameterSpinner').val() / 2.0;
+				var mlPerRev = 3.14159 *  r * r * $('#pitchPerRevSpinner').val();
+				
+				var ml = mmAmnt / $('#pitchPerRevSpinner').val()
+						* mlPerRev;
+
+				return ml;
+			};
+
+			var startTime = null;
+			var updateTime = 300;
+			// This function will check every
+			var checkLevels = function(max, filling) {
+
+				//var amnt = $('#syringeProgress').data('amnt');
+				if (startTime === null)
+					startTime = new Date().getTime();
+				$
+						.ajax({
+							method : "GET",
+							url : "info",
+							data : {
+								type : "amnt"
+							},
+							success : function(data) {
+
+								var result = $.parseJSON(data);
+
+								var mm = result.amnt;
+								var ml = convertMmToMl(mm);
+
+								// Round to nearest tenth
+								mm = Math.round(mm * 10) / 10;
+								ml = Math.round(ml * 10) / 10;
+								var percent = Math.round((mm / max * 100) * 10) / 10;
+
+								$('#syringeProgress').css('width',
+										percent + '%');
+								$('#syringeProgress').text(
+										ml + ' (' + percent + '%)');
+
+								console.log(mm + " < " + max + " = "
+										+ (mm < max));
+
+								if (filling && mm < max) {
+									setTimeout(checkLevels, updateTime, max,
+											true);
+								} else if (!filling && 0 < mm) {
+									setTimeout(checkLevels, updateTime, max,
+											false);
+								} else {
+
+									var diff = ((new Date().getTime() - startTime) / 1000.0);
+
+									// Round it to nearest hundreth
+									diff = Math.round(diff * 100) / 100;
+
+									displayMessage(
+											'Syringe pump completed. The approximate amount of time the machine ran for was '
+													+ diff + ' seconds.',
+											'success');
+
+									startTime = null;
+
+								}
+							}
+						});
+
+			}
+
+			// Initialize the load button click event
+			$("#loadButton")
+					.click(
+							function(event) {
+
+								// time should be in milliseconds
+								$
+										.ajax({
+											method : "POST",
+											url : "load",
+											data : {
+												amnt : convertMlToMm($(
+														'#loadAmountSpinner')
+														.val()),
+												time : $('#loadTimeSpinner')
+														.val() * 1000
+											},
+											success : function(data) {
+
+												var result = $.parseJSON(data);
+
+												displayMessage(
+														'Syringe pump started to load. Sit back and relax...',
+														'info');
+
+												setTimeout(checkLevels,
+														updateTime,
+														result.amnt, true);
+
+											},
+											error : function(msg) {
+												displayMessage(
+														'Failed to start!',
+														'danger');
+											}
+										});
+
+							});
+
+			// Initialize the unload button click event
+			$("#unloadButton")
+					.click(
+							function(event) {
+
+								$
+										.ajax({
+											method : "POST",
+											url : "unload",
+											data : {
+												amnt : convertMlToMm($(
+														'#loadAmountSpinner')
+														.val()),
+												time : $('#unloadTimeSpinner')
+														.val() * 60 * 1000
+											},
+											success : function(data) {
+
+												var result = $.parseJSON(data);
+
+												displayMessage(
+														'Syringe pump started to unload. Sit back and relax...',
+														'info');
+
+												setTimeout(checkLevels,
+														updateTime,
+														result.amnt, false);
+
+											},
+											error : function(msg) {
+												displayMessage(
+														'Failed to start!',
+														'danger');
+											}
+										});
+
+							});
+
+			$('#shutdownButton').click(function(event) {
+				$('#shutdownModal').modal('show');
+			});
+
+			$('#shutdownConfirmButton').click(
+					function(event) {
+
+						$.ajax({
+							method : "POST",
+							url : "shutdown",
+							success : function(data) {
+
+								var result = $.parseJSON(data);
+
+								displayMessage(result.msg, 'success');
+
+							},
+							error : function(msg) {
+								displayMessage(
+										'Failed to shutdown the syringe pump.',
+										'danger');
+							}
+						});
+
+					});
+
+			// Initially hide the advanced features...
+			$('#advancedFeaturesContent').hide();
+			$('#advancedFeatures').click(function() {
+				$('#advancedFeaturesContent').toggle();
+			})
+
+			// Make sure each spinner's buttons work properly
+			$('.spinner').each(function(i) {
+				var spinner = $(this);
+				var input = spinner.find('input');
+				spinner.find('.btn:first-of-type').on('click', function() {
+					input.val(parseInt(input.val(), 10) + 1);
+				});
+				spinner.find('.btn:last-of-type').on('click', function() {
+					input.val(parseInt(input.val(), 10) - 1);
+				});
+			});
+
+		}
+	</script>
+</body>
+</html>
