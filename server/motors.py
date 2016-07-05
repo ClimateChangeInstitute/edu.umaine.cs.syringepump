@@ -121,10 +121,11 @@ class MotorEmulator(Motor):
             steps *= 8
         
         sleepAmnt = time_ms / 1000.0 / steps
-        print sleepAmnt
+        print "Sleep amount = %f and steps = %f" % (sleepAmnt, steps)
         for _ in range(steps):
             self.oneStep(direction, stepstyle)
             time.sleep(sleepAmnt)
+            print "current step = %f" % self.getCurrentstep()
     
         return self.getCurrentstep()
             

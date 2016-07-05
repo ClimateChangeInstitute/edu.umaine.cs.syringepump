@@ -37,6 +37,8 @@ class SyringePump(object):
         @param time_ms: The amount of time to move in milliseconds (Not null) 
         '''        
         numSteps = int(abs(amnt_mm * self.motor.getStepsPerRevolution() / self.pitch_mm))
+        
+        print "amnt = %f, stepsPer = %f, pitch = %f" % (amnt_mm, self.motor.getStepsPerRevolution(), self.pitch_mm)
         direction = Motor.FORWARD if amnt_mm >= 0 else Motor.BACKWARD
         
         self.motor.step(numSteps, direction, Motor.SINGLE, time_ms)
