@@ -29,29 +29,9 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Syringe Pump Controller</a>
-			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<!-- <li class="active"><a href="#">Home</a></li> -->
-					<li><a href="#about" data-toggle="modal" data-target="#about">About</a></li>
-					<li><a href="#contact" data-toggle="modal"
-						data-target="#contact">Contact</a></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</nav>
+	<div id="header">
+	<!-- Navigation will be populated here from header.html -->
+	</div>
 
 	<div class="container" style="padding-top: 15px">
 		<form class="form-horizontal">
@@ -247,80 +227,8 @@
 	<!-- /.container -->
 
 
-	<!-- About Modal -->
-	<div id="about" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">About</h4>
-				</div>
-				<div class="modal-body">
-					<p>The syringe pump has been developed by Andrei Kurbatov and
-						Mark Royer. Specify the amount to load, and the syringe will fill
-						in roughly 20 seconds. Specify the unload time. For additional
-						options, click on the 'Advanced features' hyperlink.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<!-- Contact Modal -->
-	<div id="contact" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Contact</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-						If you are having issues, you can ask Andrei Kurbatov ( <a
-							href="akurbatov@maine.edu">akurbatov@maine.edu</a> ) or Mark
-						Royer ( <a href="mroyer@cs.umaine.edu">mroyer@cs.umaine.edu</a> )
-						for help.
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<!-- Shutdown Modal -->
-	<div id="shutdownModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Shutdown Pump?</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-						Are you sure you want to shutdown the pump? Clicking <strong>OK</strong>
-						will cause the pump to stop all activity and power down.
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button id="shutdownConfirmButton" type="button"
-						class="btn btn-default" data-dismiss="modal">OK</button>
-				</div>
-			</div>
-
-		</div>
+	<div id="modals">
+		<!-- Modal dialogs will be populated here from modals.html -->
 	</div>
 
 
@@ -336,5 +244,15 @@
 		src="lib/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
 
 	<script type="text/javascript" src="js/syringepump.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#header").load("header.html", function(){
+				$("#homeNav").addClass("active");
+			});
+			$("#modals").load("modals.html");
+		
+		});
+	</script>
 </body>
 </html>

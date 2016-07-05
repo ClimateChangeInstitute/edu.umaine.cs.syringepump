@@ -52,3 +52,7 @@ body {
 .hidden {
      display:none;
 }
+
+.col-xs-12 {
+	margin-top: 10px;
+}
