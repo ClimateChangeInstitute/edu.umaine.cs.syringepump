@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<meta name="description"
+	content="Syringe pump controller using linear-actuator">
+<meta name="author" content="Mark Royer">
+<link rel="icon" href="../../favicon.ico">
+
+<title>Syringe Pump Controller</title>
+
+<!-- Bootstrap core CSS -->
+<link href="lib/bootstrap-3.3.6-dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="lib/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+<link href="lib/font-awesome-4.6.3/css/font-awesome.css"
+	rel="stylesheet">
+
+<link href="site.css" rel="stylesheet">
+
+
+
+
+
+</head>
+<body>
+	<div id="header">
+		<!-- Navigation will be populated here from header.html -->
+	</div>
+
+	<div class="container" style="padding-top: 15px">
+
+		<div id="rootwizard" class="tabbable">
+			<ul>
+				<li id="l1k"><a href="#tab1" data-toggle="tab">1: Load 1k</a></li>
+				<li id="ul1k"><a href="#tab2" data-toggle="tab">2: Load 2k</a></li>
+				<li id="l2k"><a href="#tab3" data-toggle="tab">3: Load 4k</a></li>
+				<li id="ul2k"><a href="#tab4" data-toggle="tab">4: Verify
+						&amp; Save</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane" id="tab1">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<p>Prepare fluid for the syringe to load.</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<p>
+									When you click the <b>load</b> button, the syringe motor will
+									turn 1000 steps and fill with fluid. When the syringe pump
+									stops, prepare a vessel for weighing the fluid amount.
+								</p>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<button id="loadButton" class="btn btn-default btn-block"
+									type="button">Load</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<p>
+									Hit <b>unload</b> button to discharge the fluid.
+								</p>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<button id="unloadButton" class="btn btn-default btn-block"
+									type="button">Unload</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<p>
+									Enter the amount of discharged fluid in ml and click <b>next</b>.
+								</p>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<input type="number" id="input1k" class="form-control" required="required" min="0">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab4">
+					When the syringe pump stops, prepare a vessel for weighing the
+					fluid amount. Hit <b>next</b> to unload the fluid.
+				</div>
+				<div class="tab-pane" id="tab5">
+					Enter the amount of discharged fluid in ml. <input type="number"
+						id="input2k" required="required"> Prepare fluid for the
+					syringe to load. When you click next, it will load 4000 steps of
+					fluid.
+				</div>
+				<div class="tab-pane" id="tab6">
+					When the syringe pump stops, prepare a vessel for weighing the
+					fluid amount. Hit <b>next</b> to unload the fluid.
+				</div>
+				<div class="tab-pane" id="tab7">
+					Enter the amount of discharged fluid in ml. <input type="number"
+						id="input4k" required="required"> Verify the values and
+					click save calibration settings.
+				</div>
+				<ul class="pager wizard">
+					<li class="previous"><a href="#">Previous</a></li>
+					<li class="next"><a href="#">Next</a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div id="modals">
+		<!-- Modal dialogs will be populated here from modals.html -->
+	</div>
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script>
+		window.jQuery
+				|| document
+						.write('<script type="text\/javascript" src="lib/jquery/jquery-2.2.4.min.js"><\/script>')
+	</script>
+	<script type="text/javascript"
+		src="lib/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+	<script type="text/javascript"
+		src="lib/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+
+	<script type="text/javascript" src="js/syringepump.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#header").load("header.html", function() {
+				$("#calNav").addClass("active");
+			});
+			$("#modals").load("modals.html");
+			$('#rootwizard').bootstrapWizard({
+				'tabClass' : 'nav nav-tabs',
+				'onNext' : function(evt) {
+					console.log('fired next event. ' + evt[0].id);
+					console.log(evt);
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>
