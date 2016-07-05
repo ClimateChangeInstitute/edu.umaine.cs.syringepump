@@ -6,6 +6,7 @@ Created on May 22, 2016
 '''
 import sys
 from subprocess import call
+from motors import MotorEmulator, ArduinoMotor, RaspberryPiMotor
 import time
 import thread
 import subprocess
@@ -17,7 +18,7 @@ sys.path.append('lib')
 import json
 from bottle import run, post, request, response, get, route, static_file
 
-SYSTEM_PASS = '' # set this if you want to be able to shutdown the server
+SYSTEM_PASS = ''  # set this if you want to be able to shutdown the server
 SERVER_PATH = '../client'
 SETTINGS_FILE = SERVER_PATH + '/settings.json'
 
@@ -46,7 +47,7 @@ def getSyringePump():
         print "Using Arduino motor controller"
     except:
         try:
-            from motors import MotorEmulator, AdafruitMotor, ArduinoMotor
+            #from motors import MotorEmulator, ArduinoMotor, RaspberryPiMotor
             motor = RaspberryPiMotor(stepsPerRev)
             print "Using Raspberry Pi Adafruit Python motor controller"
         except:
@@ -58,11 +59,15 @@ def getSyringePump():
 syringePump = getSyringePump()
 
 @route('/')
-def serveRoot(): # Default server home page
+def serveRoot():  # Default server home page
     return static_file('/index.html', root=SERVER_PATH)
 
 @route('/<filename:path>')
 def server_static(filename):
+    '''
+    Serves the static documents in SERVER_PATH.
+    @param filename: The name of the file to retrieve
+    '''
     return static_file(filename, root=SERVER_PATH)
 
 @route('/load', method='POST')
@@ -70,7 +75,7 @@ def load():
     amnt = float(request.forms.get('amnt'))
     time = float(request.forms.get('time'))
         
-    print "Moving motor to %f in %f amount of time " % (amnt, time)
+    print "Moving motor %f mm in %f ms" % (amnt, time)
         
     syringePump.reset(0)
     syringePump.movePositionAsync(amnt, time)
@@ -89,7 +94,7 @@ def unload():
     amnt = float(request.forms.get('amnt'))
     time = float(request.forms.get('time'))
         
-    print "Moving motor to %f in %f amount of time " % (amnt, time)
+    print "Moving motor %f mm in %f ms" % (amnt, time)
         
     syringePump.movePositionAsync(-1 * amnt, time)
     
@@ -100,6 +105,25 @@ def unload():
            }
     
     return json.dumps(obj)
+
+@route('/moveSteps', method='POST')
+def moveSteps():
+    
+    steps = int(request.forms.get('steps'))
+    time_ms = float(request.forms.get('time_ms'))
+    
+    print "Moving motor %d steps in %f ms" % (steps, time_ms)
+    
+    syringePump.moveStepsAsync(steps, time_ms)
+    
+    obj = {
+           'msg': "Started to unload syringe!",
+           'steps': steps,
+           'time_ms': time_ms
+           }
+    
+    return json.dumps(obj)
+    
 
 @route('/info', method='GET')
 def info():
@@ -136,7 +160,7 @@ def shutdown():
 if __name__ == '__main__':
     
     # Listen on localhost interface only
-    #run(host='localhost', port=8080, debug=True)
+    # run(host='localhost', port=8080, debug=True)
     
     # Listen to all interfaces, which will allow external connections
     run(host='0.0.0.0', port=8080, debug=True)
