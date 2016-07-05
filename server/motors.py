@@ -190,7 +190,7 @@ class ArduinoMotor(Motor):
     def turnOffMotor(self):
         pass
     
-class AdafruitMotor(Motor):
+class RaspberryPiMotor(Motor):
     '''
     Encapsulates communication to an underlying Adafruit motor HAT.
     '''
@@ -198,7 +198,7 @@ class AdafruitMotor(Motor):
     def __init__(self, stepsPerRev=200):
         initStep = 0
         motorNum = 1
-        super(AdafruitMotor, self).__init__(initStep, stepsPerRev)
+        super(RaspberryPiMotor, self).__init__(initStep, stepsPerRev)
         self.motor = Adafruit_MotorHAT().getStepper(stepsPerRev, motorNum)
         
     def __executeSteps(self, numSteps, stepType, direction, time_ms, updateSteps='20'):

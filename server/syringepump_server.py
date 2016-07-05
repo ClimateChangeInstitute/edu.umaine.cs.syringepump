@@ -5,7 +5,6 @@ Created on May 22, 2016
 @author: Mark Royer
 '''
 import sys
-from motors import MotorEmulator, AdafruitMotor, ArduinoMotor
 from subprocess import call
 import time
 import thread
@@ -29,8 +28,8 @@ def getSyringePump():
     '''
     
     data = None
-    with open(SETTINGS_FILE) as file:    
-        data = json.load(file)
+    with open(SETTINGS_FILE) as f:    
+        data = json.load(f)
     
     if data == None:
         print "Unable to load settings file %s." % SETTINGS_FILE
@@ -47,9 +46,9 @@ def getSyringePump():
         print "Using Arduino motor controller"
     except:
         try:
-            from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
-            motor = AdafruitMotor(stepsPerRev)
-            print "Using Adafruit python motor controller"
+            from motors import MotorEmulator, AdafruitMotor, ArduinoMotor
+            motor = RaspberryPiMotor(stepsPerRev)
+            print "Using Raspberry Pi Adafruit Python motor controller"
         except:
             motor = MotorEmulator(stepsPerRev)
             print "Using motor emulation."
