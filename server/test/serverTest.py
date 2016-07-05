@@ -4,7 +4,7 @@ Created on May 24, 2016
 @author: Mark Royer
 '''
 import unittest
-#from server.actuator_server import Server
+#from server.syringepump_server import Server
 
 class Test(unittest.TestCase):
 
