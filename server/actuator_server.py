@@ -109,8 +109,6 @@ def info():
     
     obj = {}
     
-    print "Current position %f" % syringePump.getPosition()
-    
     if infoType == "amnt" :
         obj['msg'] = "Position of motor"
         obj['amnt'] = syringePump.getPosition()

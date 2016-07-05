@@ -41,7 +41,7 @@ var sp = {};
 		var r = $('#syringeDiameterSpinner').val() / 2.0;
 		var mlPerRev = 3.14159 * r * r * $('#pitchPerRevSpinner').val();
 
-		var ml = mmAmnt / $('#pitchPerRevSpinner').val() * mlPerRev;
+		var ml = mmAmnt / $('#pitchPerRevSpinner').val() * mlPerRev / 1000.0;
 
 		return ml;
 	};
@@ -77,7 +77,6 @@ var sp = {};
 		// This function will check every
 		var cls = function(max, filling) {
 
-			// var amnt = $('#syringeProgress').data('amnt');
 			if (startTime === null)
 				startTime = new Date().getTime();
 			$
@@ -95,15 +94,14 @@ var sp = {};
 							var ml = sp.convertMmToMl(mm);
 
 							// Round to nearest tenth
-							mm = Math.round(mm * 10) / 10;
-							ml = Math.round(ml * 10) / 10;
-							var percent = Math.round((mm / max * 100) * 10) / 10;
+							mm = +mm.toFixed(1);
+							ml = +ml.toFixed(1);
+							var maxMl = +sp.convertMmToMl(max).toFixed(1);
+							var percent = +(ml / maxMl * 100).toFixed(1);
 
 							$('#syringeProgress').css('width', percent + '%');
 							$('#syringeProgress').text(
 									ml + ' (' + percent + '%)');
-
-							console.log(mm + " < " + max + " = " + (mm < max));
 
 							if (filling && mm < max) {
 								setTimeout(cls, updateTime, max, true);
@@ -251,8 +249,7 @@ var sp = {};
 
 	};
 
-	$(document).ready()
-	{
+	$(document).ready(function() {
 
 		sp.setupDefaultValues();
 
@@ -260,6 +257,6 @@ var sp = {};
 
 		sp.setupAdvancedFeaturesButton();
 
-	}
+	});
 
 })(sp);
