@@ -38,77 +38,63 @@
 		<div id="rootwizard" class="tabbable">
 			<ul>
 				<li id="l1k"><a href="#tab1" data-toggle="tab">1: Load 1k</a></li>
-				<li id="ul1k"><a href="#tab2" data-toggle="tab">2: Load 2k</a></li>
-				<li id="l2k"><a href="#tab3" data-toggle="tab">3: Load 4k</a></li>
-				<li id="ul2k"><a href="#tab4" data-toggle="tab">4: Verify
-						&amp; Save</a></li>
+				<li id="l2k"><a href="#tab2" data-toggle="tab">2: Load 2k</a></li>
+				<li id="l4k"><a href="#tab3" data-toggle="tab">3: Load 4k</a></li>
+				<li id="saveTab"><a href="#tab4" data-toggle="tab">4:
+						Verify &amp; Save</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane" id="tab1">
+					<!-- Contents from calibrateStep.html and ready function -->
+				</div>
+				<div class="tab-pane" id="tab2">
+					<!-- Contents from calibrateStep.html and ready function -->
+				</div>
+				<div class="tab-pane" id="tab3">
+					<!-- Contents from calibrateStep.html and ready function -->
+				</div>
+				<div class="tab-pane" id="tab4">
 					<div class="form-group">
 						<div class="row">
+							<label for="input1kFinal"
+								class="col-xs-12 col-sm-6 form-control-label">1000 steps
+								ml</label>
 							<div class="col-xs-12 col-sm-6">
-								<p>Prepare fluid for the syringe to load.</p>
+								<input id="input1kFinal" type="number" class="form-control"
+									min="0">
+							</div>
+						</div>
+						<div class="row">
+							<label for="input2kFinal"
+								class="col-xs-12 col-sm-6 form-control-label">2000 steps
+								ml</label>
+							<div class="col-xs-12 col-sm-6">
+								<input id="input2kFinal" type="number" class="form-control"
+									min="0">
+							</div>
+						</div>
+						<div class="row">
+							<label for="input4kFinal"
+								class="col-xs-12 col-sm-6 form-control-label">1000 steps
+								ml</label>
+							<div class="col-xs-12 col-sm-6">
+								<input id="input4kFinal" type="number" class="form-control"
+									min="0">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
-								<p>
-									When you click the <b>load</b> button, the syringe motor will
-									turn 1000 steps and fill with fluid. When the syringe pump
-									stops, prepare a vessel for weighing the fluid amount.
-								</p>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-								<button id="loadCalButton" class="btn btn-default btn-block"
-									type="button" steps="1000">Load</button>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
-								<p>
-									Hit <b>unload</b> button to discharge the fluid.
-								</p>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-								<button id="unloadCalButton" class="btn btn-default btn-block"
-									type="button" steps="1000">Unload</button>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12 col-sm-6">
-								<p>
-									Enter the amount of discharged fluid in ml and click <b>next</b>.
-								</p>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-								<input type="number" id="input1k" class="form-control" required="required" min="0">
+								<p>Please verify the inputs shown above. If they are
+									correct, click save.</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane" id="tab4">
-					When the syringe pump stops, prepare a vessel for weighing the
-					fluid amount. Hit <b>next</b> to unload the fluid.
-				</div>
-				<div class="tab-pane" id="tab5">
-					Enter the amount of discharged fluid in ml. <input type="number"
-						id="input2k" required="required"> Prepare fluid for the
-					syringe to load. When you click next, it will load 4000 steps of
-					fluid.
-				</div>
-				<div class="tab-pane" id="tab6">
-					When the syringe pump stops, prepare a vessel for weighing the
-					fluid amount. Hit <b>next</b> to unload the fluid.
-				</div>
-				<div class="tab-pane" id="tab7">
-					Enter the amount of discharged fluid in ml. <input type="number"
-						id="input4k" required="required"> Verify the values and
-					click save calibration settings.
-				</div>
 				<ul class="pager wizard">
 					<li class="previous"><a href="#">Previous</a></li>
 					<li class="next"><a href="#">Next</a></li>
+					<li class="next finish" style="display: none;"><a
+						href="javascript:;">Save</a></li>
 				</ul>
 			</div>
 		</div>
@@ -135,54 +121,128 @@
 
 	<script type="text/javascript" src="js/syringepump.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#header").load("header.html", function() {
-				$("#calNav").addClass("active");
-			});
-			$("#modals").load("modals.html");
-			$('#rootwizard').bootstrapWizard({
-				'tabClass' : 'nav nav-tabs',
-				'onNext' : function(evt) {
-					console.log('fired next event. ' + evt[0].id);
-					console.log(evt);
-				}
-			});
-			
-			
-			
-			// Initialize the load button click event
-			$("#loadCalButton")
-					.click(
-							function(event) {
+		$(document).ready(
+				function() {
+					$("#header").load("header.html", function() {
+						$("#calNav").addClass("active");
+					});
+					$("#modals").load("modals.html");
+					$('#rootwizard').bootstrapWizard(
+							{
+								'tabClass' : 'nav nav-tabs',
+								'onNext' : function(evt) {
+									console.log('fired next event. '
+											+ evt[0].id);
+									console.log(evt);
+								},
+								'onLast' : function(evt) {
+									console.log('last one!');
+								},
+								'onTabShow' : function(tab, navigation, index) {
+									var $total = navigation.find('li').length;
+									var $current = index + 1;
+									var $percent = ($current / $total) * 100;
+									$('#rootwizard').find('.bar').css({
+										width : $percent + '%'
+									});
 
-								var steps = $('#loadCalButton').attr('steps');
-								
-								console.log("Number of steps " + steps);
-								
-								// time should be in milliseconds
-								$
-										.ajax({
-											method : "POST",
-											url : "moveSteps",
-											data : {
-												steps : steps,
-												time_ms : steps * 5
-											},
-											success : function(data) {
+									// If it's the last tab then hide the next button and show the save instead
+									if ($current >= $total) {
+										$('#rootwizard').find('.pager .next')
+												.hide();
+										$('#rootwizard').find('.pager .finish')
+												.show();
+										$('#rootwizard').find('.pager .finish')
+												.removeClass('disabled');
 
-												var result = $.parseJSON(data);
+										// Make sure final values match
+										$('#input1kFinal').val(
+												$('#input1k').val());
+										$('#input2kFinal').val(
+												$('#input2k').val());
+										$('#input4kFinal').val(
+												$('#input4k').val());
 
-												console.log(result.msg);
+										console.log($('#input1k').val());
 
-											},
-											error : function(msg) {
-												console.log('Failed to start!');
-											}
-										});
-
+									} else {
+										$('#rootwizard').find('.pager .next')
+												.show();
+										$('#rootwizard').find('.pager .finish')
+												.hide();
+									}
+								}
 							});
-			
-		});
+					$('#rootwizard .finish').click(
+							function() {
+								alert('Saving values '
+										+ $('#input1kFinal').val() + ' '
+										+ $('#input2kFinal').val() + ' '
+										+ $('#input4kFinal').val());
+							});
+
+					// Initialize the load and unload button click events
+
+					var initLoadAndUnloadEvents = function(buttonName,
+							loadSteps) {
+						$('#' + buttonName).click(function(event) {
+
+							$('#' + buttonName).attr('steps', loadSteps);
+
+							console.log("Number of steps " + loadSteps);
+
+							// time should be in milliseconds
+							$.ajax({
+								method : "POST",
+								url : "moveSteps",
+								data : {
+									steps : loadSteps,
+									time_ms : Math.abs(loadSteps * 5)
+								},
+								success : function(data) {
+
+									var result = $.parseJSON(data);
+
+									console.log(result.msg);
+
+								},
+								error : function(msg) {
+									console.log('Failed to start!');
+								}
+							});
+
+						});
+
+					}
+
+					var tabInit = function(tabName, loadName, loadSteps,
+							unloadName, unloadSteps, inputId) {
+						$('#' + tabName).load("calibrateStep.html", function() {
+							var buttons = $(this).find('button');
+							console.log(buttons);
+							var stepLoad = $(buttons[0]);
+							stepLoad.attr('id', loadName);
+							console.log(stepLoad);
+							var stepUnload = $(buttons[1]);
+							stepUnload.attr('id', unloadName);
+							initLoadAndUnloadEvents(loadName, loadSteps);
+							initLoadAndUnloadEvents(unloadName, unloadSteps);
+							// Update text elemnts
+							$(this).find('.loadSteps').text(loadSteps);
+							console.log($(this).find('.loadSteps'));
+							// Update input ID
+							$(this).find('#inputNumber').attr('id', inputId);
+						});
+					};
+
+					tabInit("tab1", "step1000Button", 1000, "step-1000Button",
+							-1000, "input1k");
+					tabInit("tab2", "step2000Button", 2000, "step-2000Button",
+							-2000, "input2k");
+					tabInit("tab3", "step4000Button", 4000, "step-4000Button",
+							-4000, "input4k");
+
+				});
 	</script>
 </body>
 
