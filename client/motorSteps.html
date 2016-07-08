@@ -1,0 +1,75 @@
+<!-- Controls to directly step the motor in a direction -->
+<div>
+	<div class="col-xs-12 col-sm-2">
+		<button id="motorStepBackward" type="button" class="btn btn-default col-xs-12" title="-2000 steps">
+			<span class="glyphicon glyphicon-step-backward"></span>
+		</button>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<button id="motorFastBackward" type="button" class="btn btn-default col-xs-12" title="-1000 steps">
+			<span class="glyphicon glyphicon-fast-backward"></span>
+		</button>
+	</div>
+	<div class="col-xs-12 col-sm-1">
+		<button id="motorBackward" type="button" class="btn btn-default col-xs-12" title="-100 steps">
+			<span class="glyphicon glyphicon-backward"></span>
+		</button>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<button id="motorStop" type="button" class="btn btn-default col-xs-12" title="Reset home position">
+			<span class="glyphicon glyphicon-refresh"></span>
+		</button>
+	</div>
+	<div class="col-xs-12 col-sm-1">
+		<button id="motorForward" type="button" class="btn btn-default col-xs-12" title="100 steps">
+			<span class="glyphicon glyphicon-forward"></span>
+		</button>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<button id="motorFastForward" type="button" class="btn btn-default col-xs-12" title="1000 steps">
+			<span class="glyphicon glyphicon-fast-forward"></span>
+		</button>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<button id="motorStepForward" type="button" class="btn btn-default col-xs-12" title="2000 steps">
+			<span class="glyphicon glyphicon-step-forward"></span>
+		</button>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			var initStepButton = function(buttonName, loadSteps) {
+				// Initialize the load button click event
+				$('#' + buttonName).click(function(event) {
+					// time should be in milliseconds
+					$.ajax({
+						method : "POST",
+						url : "moveSteps",
+						data : {
+							steps : loadSteps,
+							time_ms : Math.abs(loadSteps * 5)
+						},
+						success : function(data) {
+
+							var result = $.parseJSON(data);
+
+							console.log(result.msg);
+
+						},
+						error : function(msg) {
+							console.log('Failed to start!');
+						}
+					});
+
+				});
+			};
+
+			initStepButton("motorStepBackward", -2000);
+			initStepButton("motorFastBackward", -1000);
+			initStepButton("motorBackward", -100);
+			initStepButton("motorForward", 100);
+			initStepButton("motorFastForward", 1000);
+			initStepButton("motorStepForward", 2000);
+		});
+	</script>
+</div>
