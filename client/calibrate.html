@@ -34,7 +34,30 @@
 	</div>
 
 	<div class="container" style="padding-top: 15px">
-
+		<div class="form-group">
+			<div class="row">
+				<label for="syringeStatus"
+					class="col-xs-12 col-sm-3 form-control-label">Syringe
+					Status</label>
+				<div class="col-xs-12 col-sm-9">
+					<div id="syringeStatus" class="alert alert-info">The syringe
+						is not active.</div>
+				</div>
+			</div>
+			<div class="row">
+				<label for="syringeProgress"
+					class="col-xs-12 col-sm-3 form-control-label">Progress
+					(steps)</label>
+				<div class="col-xs-12 col-sm-9">
+					<div class="progress">
+						<div id="syringeProgress"
+							class="progress-bar progress-bar-info progress-bar-striped"
+							role="progressbar" aria-valuenow="0" aria-valuemin="0"
+							aria-valuemax="100" style="width: 0%">0 (0%)</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="rootwizard" class="tabbable">
 			<ul>
 				<li id="l1k"><a href="#tab1" data-toggle="tab">1: Load 1k</a></li>
@@ -121,128 +144,189 @@
 
 	<script type="text/javascript" src="js/syringepump.js"></script>
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					$("#header").load("header.html", function() {
-						$("#calNav").addClass("active");
-					});
-					$("#modals").load("modals.html");
-					$('#rootwizard').bootstrapWizard(
-							{
-								'tabClass' : 'nav nav-tabs',
-								'onNext' : function(evt) {
-									console.log('fired next event. '
-											+ evt[0].id);
-									console.log(evt);
-								},
-								'onLast' : function(evt) {
-									console.log('last one!');
-								},
-								'onTabShow' : function(tab, navigation, index) {
-									var $total = navigation.find('li').length;
-									var $current = index + 1;
-									var $percent = ($current / $total) * 100;
-									$('#rootwizard').find('.bar').css({
-										width : $percent + '%'
+		$(document)
+				.ready(
+						function() {
+							$("#header").load("header.html", function() {
+								$("#calNav").addClass("active");
+							});
+							$("#modals").load("modals.html");
+							$('#rootwizard')
+									.bootstrapWizard(
+											{
+												'tabClass' : 'nav nav-tabs',
+												'onNext' : function(evt) {
+													console
+															.log('fired next event. '
+																	+ evt[0].id);
+													console.log(evt);
+												},
+												'onLast' : function(evt) {
+													console.log('last one!');
+												},
+												'onTabShow' : function(tab,
+														navigation, index) {
+													var $total = navigation
+															.find('li').length;
+													var $current = index + 1;
+													var $percent = ($current / $total) * 100;
+													$('#rootwizard').find(
+															'.bar').css({
+														width : $percent + '%'
+													});
+
+													// If it's the last tab then hide the next button and show the save instead
+													if ($current >= $total) {
+														$('#rootwizard').find(
+																'.pager .next')
+																.hide();
+														$('#rootwizard')
+																.find(
+																		'.pager .finish')
+																.show();
+														$('#rootwizard')
+																.find(
+																		'.pager .finish')
+																.removeClass(
+																		'disabled');
+
+														// Make sure final values match
+														$('#input1kFinal').val(
+																$('#input1k')
+																		.val());
+														$('#input2kFinal').val(
+																$('#input2k')
+																		.val());
+														$('#input4kFinal').val(
+																$('#input4k')
+																		.val());
+
+														console.log($(
+																'#input1k')
+																.val());
+
+													} else {
+														$('#rootwizard').find(
+																'.pager .next')
+																.show();
+														$('#rootwizard')
+																.find(
+																		'.pager .finish')
+																.hide();
+													}
+												}
+											});
+							$('#rootwizard .finish').click(
+									function() {
+										alert('Saving values '
+												+ $('#input1kFinal').val()
+												+ ' '
+												+ $('#input2kFinal').val()
+												+ ' '
+												+ $('#input4kFinal').val());
 									});
 
-									// If it's the last tab then hide the next button and show the save instead
-									if ($current >= $total) {
-										$('#rootwizard').find('.pager .next')
-												.hide();
-										$('#rootwizard').find('.pager .finish')
-												.show();
-										$('#rootwizard').find('.pager .finish')
-												.removeClass('disabled');
+							// Initialize the load and unload button click events
 
-										// Make sure final values match
-										$('#input1kFinal').val(
-												$('#input1k').val());
-										$('#input2kFinal').val(
-												$('#input2k').val());
-										$('#input4kFinal').val(
-												$('#input4k').val());
+							var initLoadAndUnloadEvents = function(buttonName,
+									loadSteps, isLoad) {
+								$('#' + buttonName)
+										.click(
+												function(event) {
 
-										console.log($('#input1k').val());
+													$('#' + buttonName).attr(
+															'data-steps',
+															loadSteps);
 
-									} else {
-										$('#rootwizard').find('.pager .next')
-												.show();
-										$('#rootwizard').find('.pager .finish')
-												.hide();
-									}
-								}
-							});
-					$('#rootwizard .finish').click(
-							function() {
-								alert('Saving values '
-										+ $('#input1kFinal').val() + ' '
-										+ $('#input2kFinal').val() + ' '
-										+ $('#input4kFinal').val());
-							});
+													console
+															.log("Number of steps "
+																	+ loadSteps);
 
-					// Initialize the load and unload button click events
+													// time should be in milliseconds
+													$
+															.ajax({
+																method : "POST",
+																url : "moveSteps",
+																data : {
+																	steps : loadSteps,
+																	time_ms : Math
+																			.abs(loadSteps * 5)
+																},
+																success : function(
+																		data) {
 
-					var initLoadAndUnloadEvents = function(buttonName,
-							loadSteps) {
-						$('#' + buttonName).click(function(event) {
+																	var result = $
+																			.parseJSON(data);
 
-							$('#' + buttonName).attr('steps', loadSteps);
+																	sp
+																			.displayMessage(
+																					'Syringe pump started to load. Sit back and relax...',
+																					'info');
 
-							console.log("Number of steps " + loadSteps);
+																	var min = result.start;
+																	var max = result.end;
+																	if (result.end < result.start) {
+																		min = result.end;
+																		max = result.start;
+																	}
 
-							// time should be in milliseconds
-							$.ajax({
-								method : "POST",
-								url : "moveSteps",
-								data : {
-									steps : loadSteps,
-									time_ms : Math.abs(loadSteps * 5)
-								},
-								success : function(data) {
+																	console
+																			.log(min
+																					+ " "
+																					+ max);
 
-									var result = $.parseJSON(data);
+																	sp
+																			.checkLevels(
+																					300,
+																					min,
+																					max,
+																					isLoad,
+																					"steps");
 
-									console.log(result.msg);
+																},
+																error : function(
+																		msg) {
+																	console
+																			.log('Failed to start!');
+																}
+															});
 
-								},
-								error : function(msg) {
-									console.log('Failed to start!');
-								}
-							});
+												});
+
+							}
+
+							var tabInit = function(tabName, loadName,
+									loadSteps, unloadName, unloadSteps, inputId) {
+								$('#' + tabName).load(
+										"calibrateStep.html",
+										function() {
+											var buttons = $(this)
+													.find('button');
+											var stepLoad = $(buttons[0]);
+											stepLoad.attr('id', loadName);
+											var stepUnload = $(buttons[1]);
+											stepUnload.attr('id', unloadName);
+											initLoadAndUnloadEvents(loadName,
+													loadSteps, true);
+											initLoadAndUnloadEvents(unloadName,
+													unloadSteps, false);
+											// Update text elemnts
+											$(this).find('.loadSteps').text(
+													loadSteps);
+											// Update input ID
+											$(this).find('#inputNumber').attr(
+													'id', inputId);
+										});
+							};
+
+							tabInit("tab1", "step1000Button", 1000,
+									"step-1000Button", -1000, "input1k");
+							tabInit("tab2", "step2000Button", 2000,
+									"step-2000Button", -2000, "input2k");
+							tabInit("tab3", "step4000Button", 4000,
+									"step-4000Button", -4000, "input4k");
 
 						});
-
-					}
-
-					var tabInit = function(tabName, loadName, loadSteps,
-							unloadName, unloadSteps, inputId) {
-						$('#' + tabName).load("calibrateStep.html", function() {
-							var buttons = $(this).find('button');
-							console.log(buttons);
-							var stepLoad = $(buttons[0]);
-							stepLoad.attr('id', loadName);
-							console.log(stepLoad);
-							var stepUnload = $(buttons[1]);
-							stepUnload.attr('id', unloadName);
-							initLoadAndUnloadEvents(loadName, loadSteps);
-							initLoadAndUnloadEvents(unloadName, unloadSteps);
-							// Update text elemnts
-							$(this).find('.loadSteps').text(loadSteps);
-							console.log($(this).find('.loadSteps'));
-							// Update input ID
-							$(this).find('#inputNumber').attr('id', inputId);
-						});
-					};
-
-					tabInit("tab1", "step1000Button", 1000, "step-1000Button",
-							-1000, "input1k");
-					tabInit("tab2", "step2000Button", 2000, "step-2000Button",
-							-2000, "input2k");
-					tabInit("tab3", "step4000Button", 4000, "step-4000Button",
-							-4000, "input4k");
-
-				});
 	</script>
 </body>
 

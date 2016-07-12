@@ -71,7 +71,7 @@ var sp = {};
 		});
 	};
 
-	sp.checkLevels = function(updateTime, max, filling) {
+	sp.checkLevels = function(updateTime, min, max, filling, infoType) {
 
 		var startTime = null;
 		// This function will check every
@@ -84,28 +84,32 @@ var sp = {};
 						method : "GET",
 						url : "info",
 						data : {
-							type : "amnt"
+							type : infoType
 						},
 						success : function(data) {
 
 							var result = $.parseJSON(data);
 
-							var mm = result.amnt;
-							var ml = sp.convertMmToMl(mm);
+							var mm = result[infoType];
+							var curVal = mm - min;
+							if (infoType === "amnt")
+								curVal = sp.convertMmToMl(mm);
 
 							// Round to nearest tenth
 							mm = +mm.toFixed(1);
-							ml = +ml.toFixed(1);
-							var maxMl = +sp.convertMmToMl(max).toFixed(1);
-							var percent = +(ml / maxMl * 100).toFixed(1);
+							curVal = +curVal.toFixed(1);
+							var maxVal = max - min;
+							if (infoType === "amnt")
+								maxVal = +sp.convertMmToMl(max).toFixed(1);
+							var percent = +(curVal / maxVal * 100).toFixed(1);
 
 							$('#syringeProgress').css('width', percent + '%');
 							$('#syringeProgress').text(
-									ml + ' (' + percent + '%)');
+									curVal + ' (' + percent + '%)');
 
 							if (filling && mm < max) {
 								setTimeout(cls, updateTime, max, true);
-							} else if (!filling && 0 < mm) {
+							} else if (!filling && min < mm) {
 								setTimeout(cls, updateTime, max, false);
 							} else {
 
@@ -159,8 +163,8 @@ var sp = {};
 															'Syringe pump started to load. Sit back and relax...',
 															'info');
 
-											sp.checkLevels(300, result.amnt,
-													true);
+											sp.checkLevels(300, 0, result.amnt,
+													true, "amnt");
 
 										},
 										error : function(msg) {
@@ -198,8 +202,8 @@ var sp = {};
 															'Syringe pump started to unload. Sit back and relax...',
 															'info');
 
-											sp.checkLevels(300, result.amnt,
-													false);
+											sp.checkLevels(300, 0, result.amnt,
+													false, "amnt");
 
 										},
 										error : function(msg) {
@@ -248,15 +252,5 @@ var sp = {};
 		})
 
 	};
-
-	$(document).ready(function() {
-
-		sp.setupDefaultValues();
-
-		sp.setupPushButtons();
-
-		sp.setupAdvancedFeaturesButton();
-
-	});
 
 })(sp);

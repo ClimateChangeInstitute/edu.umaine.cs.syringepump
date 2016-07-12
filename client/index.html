@@ -252,6 +252,13 @@
 			$("#header").load("header.html", function() {
 				$("#homeNav").addClass("active");
 			});
+
+			sp.setupDefaultValues();
+
+			sp.setupPushButtons();
+
+			sp.setupAdvancedFeaturesButton();
+
 			$("#modals").load("modals.html");
 			$("#motorControls").load("motorSteps.html");
 

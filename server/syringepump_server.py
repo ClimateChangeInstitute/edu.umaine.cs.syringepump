@@ -114,11 +114,14 @@ def moveSteps():
     
     print "Moving motor %d steps in %f ms" % (steps, time_ms)
     
+    start = syringePump.motor.getCurrentstep()
+    
     syringePump.moveStepsAsync(steps, time_ms)
     
     obj = {
            'msg': "Started to unload syringe!",
-           'steps': steps,
+           'start': start,
+           'end': start + steps,
            'time_ms': time_ms
            }
     
@@ -135,6 +138,10 @@ def info():
     if infoType == "amnt" :
         obj['msg'] = "Position of motor"
         obj['amnt'] = syringePump.getPosition()
+    elif infoType == "steps" :
+        obj['msg'] = "Steps motor moved"
+        obj['steps'] = syringePump.motor.getCurrentstep()
+        print 'steps %d' % obj['steps']
     
     return json.dumps(obj)
 
