@@ -98,7 +98,7 @@
 						</div>
 						<div class="row">
 							<label for="input4kFinal"
-								class="col-xs-12 col-sm-6 form-control-label">1000 steps
+								class="col-xs-12 col-sm-6 form-control-label">4000 steps
 								ml</label>
 							<div class="col-xs-12 col-sm-6">
 								<input id="input4kFinal" type="number" class="form-control"
@@ -218,12 +218,35 @@
 											});
 							$('#rootwizard .finish').click(
 									function() {
-										alert('Saving values '
-												+ $('#input1kFinal').val()
-												+ ' '
-												+ $('#input2kFinal').val()
-												+ ' '
-												+ $('#input4kFinal').val());
+										
+										var v1 = parseFloat($('#input1kFinal').val());
+										var v2 = parseFloat($('#input2kFinal').val());
+										var v3 = parseFloat($('#input4kFinal').val());
+										
+										/* console.log(v1 + " " + v2 + " " + v3); */
+										
+										var xMean = (1000 + 2000 + 4000) / 3.0;
+										var yMean = (v1 + v2 + v3) / 3.0;
+										
+										var mTop = (1000-xMean)*(v1-yMean)+(2000-xMean)*(v2-yMean)+(4000-xMean)*(v3-yMean);
+										var mBottom = (1000-xMean)*(1000-xMean)+(2000-xMean)*(2000-xMean)+(4000-xMean)*(4000-xMean);
+										var m = mTop / mBottom; // ml per step
+										var b = yMean - m * xMean;
+										/* console.log(yMean + " and " + xMean + " so b=" + b);
+										console.log("y = " + m + " * x + " + b); */
+										
+										// Values that need to be retrieved
+										var currentDiameter = 15.0;
+										var stepsPerRev = 200;
+										var currentPitch = 0.8;
+										var mm3PerMl = 1000;
+										
+										var r = currentDiameter / 2.0;
+										var newPitch = m * mm3PerMl / (3.14159 * r * r) * stepsPerRev;
+										
+										var newDiameter = 2 * Math.sqrt(m*mm3PerMl*stepsPerRev / (3.14159 * currentPitch));
+										console.log("New pitch = " + newPitch);
+										console.log("New diameter = " + newDiameter);
 									});
 
 							// Initialize the load and unload button click events
