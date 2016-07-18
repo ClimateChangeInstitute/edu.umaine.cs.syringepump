@@ -40,18 +40,8 @@
 					class="col-xs-12 col-sm-3 form-control-label">Load Amount
 					(ml)</label>
 				<div class="col-xs-12 col-sm-6">
-					<div class="input-group spinner">
-						<input id="loadAmountSpinner" type="text" class="form-control"
-							value="10">
-						<div class="input-group-btn-vertical">
-							<button class="btn btn-default" type="button">
-								<i class="fa fa-caret-up"></i>
-							</button>
-							<button class="btn btn-default" type="button">
-								<i class="fa fa-caret-down"></i>
-							</button>
-						</div>
-					</div>
+					<input id="loadAmountSpinner" type="number" class="form-control"
+						value="1" required="required" min="0">
 				</div>
 				<div class="col-xs-12 col-sm-3">
 					<button id="loadButton" class="btn btn-default btn-block"
@@ -88,18 +78,8 @@
 					class="col-xs-12 col-sm-3 form-control-label">Unload Time
 					(min.)</label>
 				<div class="col-xs-12 col-sm-6">
-					<div class="input-group spinner">
-						<input id="unloadTimeSpinner" type="text"
-							class="form-control btn-block" value="30">
-						<div class="input-group-btn-vertical">
-							<button class="btn btn-default" type="button">
-								<i class="fa fa-caret-up"></i>
-							</button>
-							<button class="btn btn-default" type="button">
-								<i class="fa fa-caret-down"></i>
-							</button>
-						</div>
-					</div>
+					<input id="unloadTimeSpinner" type="number" class="form-control"
+						value="30" required="required" min="0">
 				</div>
 				<div class="col-xs-12 col-sm-3">
 					<button id="unloadButton" class="btn btn-default btn-block"
@@ -129,18 +109,8 @@
 						class="col-xs-12 col-sm-3 form-control-label">Load Time
 						(sec.)</label>
 					<div class="col-xs-12 col-sm-6">
-						<div class="input-group spinner">
-							<input id="loadTimeSpinner" type="text"
-								class="form-control btn-block" value="20">
-							<div class="input-group-btn-vertical">
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-up"></i>
-								</button>
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-down"></i>
-								</button>
-							</div>
-						</div>
+						<input id="loadTimeSpinner" type="number" class="form-control"
+							value="20" required="required" min="0">
 					</div>
 				</div>
 				<!-- End Load time -->
@@ -153,18 +123,8 @@
 						class="col-xs-12 col-sm-3 form-control-label">Syringe
 						Diameter</label>
 					<div class="col-xs-12 col-sm-6">
-						<div class="input-group spinner">
-							<input id="syringeDiameterSpinner" type="text"
-								class="form-control btn-block" value="15">
-							<div class="input-group-btn-vertical">
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-up"></i>
-								</button>
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-down"></i>
-								</button>
-							</div>
-						</div>
+						<input id="syringeDiameterSpinner" type="number"
+							class="form-control" value="15" required="required" min="0">
 					</div>
 				</div>
 				<!-- Step per ml -->
@@ -176,18 +136,8 @@
 						class="col-xs-12 col-sm-3 form-control-label">Pitch (# mm
 						/ 1 rev))</label>
 					<div class="col-xs-12 col-sm-6">
-						<div class="input-group spinner">
-							<input id="pitchPerRevSpinner" type="text"
-								class="form-control btn-block" value="0.8">
-							<div class="input-group-btn-vertical">
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-up"></i>
-								</button>
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-down"></i>
-								</button>
-							</div>
-						</div>
+						<input id="pitchPerRevSpinner" type="number" class="form-control"
+							value="0.8" required="required" min="0">
 					</div>
 				</div>
 				<!-- Pitch per revolution -->
@@ -199,18 +149,8 @@
 						class="col-xs-12 col-sm-3 form-control-label"># Steps / 1
 						rev</label>
 					<div class="col-xs-12 col-sm-6">
-						<div class="input-group spinner">
-							<input id="stepsPerRevSpinner" type="text"
-								class="form-control btn-block" value="200">
-							<div class="input-group-btn-vertical">
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-up"></i>
-								</button>
-								<button class="btn btn-default" type="button">
-									<i class="fa fa-caret-down"></i>
-								</button>
-							</div>
-						</div>
+						<input id="stepsPerRevSpinner" type="number" class="form-control"
+							value="200" required="required" min="0">
 					</div>
 				</div>
 				<!-- Pitch per revolution -->

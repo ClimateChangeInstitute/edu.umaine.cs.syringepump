@@ -58,17 +58,6 @@ var sp = {};
 			$('#stepsPerRevSpinner').val(data.defaultStepsPerRevolution);
 		});
 
-		// Make sure each spinner's buttons work properly
-		$('.spinner').each(function(i) {
-			var spinner = $(this);
-			var input = spinner.find('input');
-			spinner.find('.btn:first-of-type').on('click', function() {
-				input.val(parseInt(input.val(), 10) + 1);
-			});
-			spinner.find('.btn:last-of-type').on('click', function() {
-				input.val(parseInt(input.val(), 10) - 1);
-			});
-		});
 	};
 
 	sp.checkLevels = function(updateTime, min, max, filling, infoType) {

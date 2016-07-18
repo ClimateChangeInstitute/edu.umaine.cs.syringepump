@@ -2,11 +2,11 @@ body {
 	padding-top: 5rem;
 }
 
-.starter-template {
+ .starter-template {
 	padding: 3rem 1.5rem;
 	text-align: center;
 }
-
+/*
 .spinner {
 	width: 100%;
 }
@@ -41,7 +41,7 @@ body {
 .input-group-btn-vertical>.btn:last-child {
 	margin-top: -2px;
 	border-bottom-right-radius: 4px;
-}
+} */
 
 .input-group-btn-vertical i {
 	position: absolute;
