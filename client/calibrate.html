@@ -156,13 +156,10 @@
 											{
 												'tabClass' : 'nav nav-tabs',
 												'onNext' : function(evt) {
-													console
-															.log('fired next event. '
-																	+ evt[0].id);
-													console.log(evt);
+													// Do nothing...
 												},
 												'onLast' : function(evt) {
-													console.log('last one!');
+													// Do nothing...
 												},
 												'onTabShow' : function(tab,
 														navigation, index) {
@@ -201,10 +198,6 @@
 																$('#input4k')
 																		.val());
 
-														console.log($(
-																'#input1k')
-																.val());
-
 													} else {
 														$('#rootwizard').find(
 																'.pager .next')
@@ -223,8 +216,10 @@
 										var v2 = parseFloat($('#input2kFinal').val());
 										var v3 = parseFloat($('#input4kFinal').val());
 										
-										/* console.log(v1 + " " + v2 + " " + v3); */
-										
+										// *************************************************
+										// START calculate linear regression of three values
+										// *************************************************
+
 										var xMean = (1000 + 2000 + 4000) / 3.0;
 										var yMean = (v1 + v2 + v3) / 3.0;
 										
@@ -232,21 +227,38 @@
 										var mBottom = (1000-xMean)*(1000-xMean)+(2000-xMean)*(2000-xMean)+(4000-xMean)*(4000-xMean);
 										var m = mTop / mBottom; // ml per step
 										var b = yMean - m * xMean;
-										/* console.log(yMean + " and " + xMean + " so b=" + b);
-										console.log("y = " + m + " * x + " + b); */
+
+										// *************************************************
+										// END calculate linear regression of three values
+										// *************************************************
+										
 										
 										// Values that need to be retrieved
-										var currentDiameter = 15.0;
-										var stepsPerRev = 200;
-										var currentPitch = 0.8;
-										var mm3PerMl = 1000;
 										
-										var r = currentDiameter / 2.0;
-										var newPitch = m * mm3PerMl / (3.14159 * r * r) * stepsPerRev;
+										// Get default values and ask for update confirmation
+										$.getJSON("settings.json", function(data) {
+											var defaultLoadAmnt_ml = data.defaultLoadAmount_ml;
+											var defaultUnloadTime_min = data.defaultUnloadTime_min;
+											var defaultLoadTime_sec = data.defaultLoadTime_sec;
+											
+											var currentDiameter = data.defaultSyringeDiameter_mm;
+											var stepsPerRev = data.defaultStepsPerRevolution;
+											var currentPitch = data.defaultPitch_mmPerRev;
+											
+											// 1000 cubic mm per 1 ml
+											var mm3PerMl = 1000;
+											var r = currentDiameter / 2.0;
+											
+											// Calculate the new values
+											
+											var newPitch = m * mm3PerMl / (3.14159 * r * r) * stepsPerRev;
+											var newDiameter = 2 * Math.sqrt(m*mm3PerMl*stepsPerRev / (3.14159 * currentPitch));
+											
+											
+											console.log("New pitch = " + newPitch);
+											console.log("New diameter = " + newDiameter);
+										});
 										
-										var newDiameter = 2 * Math.sqrt(m*mm3PerMl*stepsPerRev / (3.14159 * currentPitch));
-										console.log("New pitch = " + newPitch);
-										console.log("New diameter = " + newDiameter);
 									});
 
 							// Initialize the load and unload button click events
