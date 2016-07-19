@@ -7,7 +7,7 @@ var calibrationSetup = function() {
 	$("#header").load("header.html", function() {
 		$("#calNav").addClass("active");
 	});
-	
+
 	$('#rootwizard').bootstrapWizard(
 			{
 				'tabClass' : 'nav nav-tabs',
@@ -93,8 +93,43 @@ var calibrationSetup = function() {
 					var newDiameter = 2 * Math.sqrt(m * mm3PerMl * stepsPerRev
 							/ (3.14159 * currentPitch));
 
-					console.log("New pitch = " + newPitch);
-					console.log("New diameter = " + newDiameter);
+					// We'll ignore the newPitch and just use the newDiameter for now
+					
+					bootbox.confirm("Are you sure you want to save the new calibration settings?", function(result) {
+						  if (result) {
+							  $.ajax({
+									method : "POST",
+									url : "defaults",
+									data : {
+										action : 'save',
+										vals : {
+											'defaultSyringeDiameter_mm' : newDiameter
+										}
+									},
+									success : function(data) {
+										var $data = $.parseJSON(data);
+										bootbox.dialog({
+											title: "Calibration Saved",
+										    message: $data.msg,
+										    onEscape: function() { 
+										    	// Redirect back to main page
+										    	window.location.href = "index.html";
+										    },
+										    backdrop: true
+										});
+									},
+									error : function(data) {
+										bootbox.dialog({
+											title: "Failed Saving",
+										    message: "Hmm... something went wrong.",
+										    onEscape: function() { /* Do nothing */ },
+										    backdrop: true
+										});
+									}
+								});
+						  }
+						}); 
+					
 				});
 
 			});
@@ -151,7 +186,7 @@ var calibrationSetup = function() {
 	}
 
 	var tabInit = function(tabName, loadName, loadSteps, unloadName,
-			unloadSteps, inputId) {
+			unloadSteps, defaultMl, inputId) {
 		$('#' + tabName).load("calibrateStep.html", function() {
 			var buttons = $(this).find('button');
 			var stepLoad = $(buttons[0]);
@@ -162,13 +197,17 @@ var calibrationSetup = function() {
 			initLoadAndUnloadEvents(unloadName, unloadSteps, false);
 			// Update text elemnts
 			$(this).find('.loadSteps').text(loadSteps);
+			$(this).find('#inputNumber').attr('value', defaultMl);
 			// Update input ID
 			$(this).find('#inputNumber').attr('id', inputId);
 		});
 	};
 
-	tabInit("tab1", "step1000Button", 1000, "step-1000Button", -1000, "input1k");
-	tabInit("tab2", "step2000Button", 2000, "step-2000Button", -2000, "input2k");
-	tabInit("tab3", "step4000Button", 4000, "step-4000Button", -4000, "input4k");
+	tabInit("tab1", "step1000Button", 1000, "step-1000Button", -1000, 1.0,
+			"input1k");
+	tabInit("tab2", "step2000Button", 2000, "step-2000Button", -2000, 2.0,
+			"input2k");
+	tabInit("tab3", "step4000Button", 4000, "step-4000Button", -4000, 4.0,
+			"input4k");
 
 };

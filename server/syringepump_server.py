@@ -142,15 +142,42 @@ def info():
     
     return json.dumps(obj)
 
-@route('/defaults')
+def dictionaryVals(d, s):
+    prefix = s + '['
+    start = len(prefix)
+    result = {}
+    for k,v in d.iteritems():
+        if k.startswith(prefix):
+            result[k[start:k.index(']')]] = v
+    
+    return result
+
+@route('/defaults', method=['GET','POST'])
 def defaults():
     
     action = request.params['action']
+        
+    with open('settings.json') as settingsFile:    
+            data = json.load(settingsFile)
     
     if action == 'load':
-        with open('settings.json') as settingsFile:    
-            data = json.load(settingsFile)
         return json.dumps(data)
+    elif action == 'save':
+        
+        vals = dictionaryVals(request.params, 'vals')
+        
+        for k,v in vals.iteritems():
+            data[k] = float(v)
+        
+        with open(SETTINGS_FILE, 'w') as f:    
+            json.dump(data, f, sort_keys=True, indent=1)
+        
+        obj = {}
+        
+        obj['msg'] = "Successfully updated calibration settings!"
+        
+        return json.dumps(obj)
+        
     
 
 def shutdownFuncThread():
