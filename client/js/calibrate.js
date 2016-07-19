@@ -73,7 +73,7 @@ var calibrationSetup = function() {
 				// Values that need to be retrieved
 
 				// Get default values and ask for update confirmation
-				$.getJSON("settings.json", function(data) {
+				$.getJSON("defaults?action=load", function(data) {
 					var defaultLoadAmnt_ml = data.defaultLoadAmount_ml;
 					var defaultUnloadTime_min = data.defaultUnloadTime_min;
 					var defaultLoadTime_sec = data.defaultLoadTime_sec;

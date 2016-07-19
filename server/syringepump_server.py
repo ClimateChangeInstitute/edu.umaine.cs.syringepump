@@ -12,6 +12,7 @@ import thread
 import subprocess
 import os
 from syringe import SyringePump
+from __builtin__ import file
 
 sys.path.append('lib')
 
@@ -20,7 +21,7 @@ from bottle import run, post, request, response, get, route, static_file
 
 SYSTEM_PASS = ''  # set this if you want to be able to shutdown the server
 SERVER_PATH = '../client'
-SETTINGS_FILE = SERVER_PATH + '/settings.json'
+SETTINGS_FILE = 'settings.json'
 
 
 def getSyringePump():
@@ -145,6 +146,16 @@ def info():
     
     return json.dumps(obj)
 
+@route('/defaults')
+def defaults():
+    
+    action = request.params['action']
+    
+    if action == 'load':
+        with open('settings.json') as settingsFile:    
+            data = json.load(settingsFile)
+        return json.dumps(data)
+    
 
 def shutdownFuncThread():
     time.sleep(2)

@@ -49,7 +49,7 @@ var sp = {};
 	sp.setupDefaultValues = function() {
 
 		// Initialize spinner default values
-		$.getJSON("settings.json", function(data) {
+		$.getJSON("defaults?action=load", function(data) {
 			$('#loadAmountSpinner').val(data.defaultLoadAmount_ml);
 			$('#unloadTimeSpinner').val(data.defaultUnloadTime_min);
 			$('#loadTimeSpinner').val(data.defaultLoadTime_sec);
