@@ -5,19 +5,16 @@ Created on May 22, 2016
 @author: Mark Royer
 '''
 import sys
-from subprocess import call
 from motors import MotorEmulator, ArduinoMotor, RaspberryPiMotor
 import time
 import thread
-import subprocess
 import os
 from syringe import SyringePump
-from __builtin__ import file
 
 sys.path.append('lib')
 
 import json
-from bottle import run, post, request, response, get, route, static_file
+from bottle import run, request, route, static_file
 
 SYSTEM_PASS = ''  # set this if you want to be able to shutdown the server
 SERVER_PATH = '../client'
@@ -29,7 +26,6 @@ def getSyringePump():
     @return: A syringe pump with motor 
     '''
     
-    data = None
     with open(SETTINGS_FILE) as f:    
         data = json.load(f)
     

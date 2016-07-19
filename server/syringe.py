@@ -4,7 +4,6 @@ Created on Jun 28, 2016
 @author: Mark Royer
 '''
 import thread
-import time
 from motors import MotorEmulator, Motor
 
 

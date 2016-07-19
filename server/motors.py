@@ -1,10 +1,9 @@
 import serial
-import thread
 import time
 
 
 try:
-    from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+    from Adafruit_MotorHAT import Adafruit_MotorHAT
 except:
     pass
 
