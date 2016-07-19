@@ -91,7 +91,7 @@
 
 			<div class="form-group">
 				<div class="col-xs-12" style="text-align: center">
-					<button id="shutdownButton" class="btn btn-danger" type="button">Shutdown
+					<button id="shutdownButton" class="btn btn-danger" type="button" data-bb="shutdown">Shutdown
 						Computer</button>
 				</div>
 			</div>
@@ -200,8 +200,7 @@
 			sp.setupPushButtons();
 
 			sp.setupAdvancedFeaturesButton();
-
-			$("#modals").load("modals.html");
+			
 			$("#motorControls").load("motorSteps.html");
 
 		});

@@ -7,7 +7,7 @@ var calibrationSetup = function() {
 	$("#header").load("header.html", function() {
 		$("#calNav").addClass("active");
 	});
-	$("#modals").load("modals.html");
+	
 	$('#rootwizard').bootstrapWizard(
 			{
 				'tabClass' : 'nav nav-tabs',

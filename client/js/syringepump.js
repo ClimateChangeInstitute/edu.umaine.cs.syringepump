@@ -204,32 +204,6 @@ var sp = {};
 
 						});
 
-		$('#shutdownButton').click(function(event) {
-			$('#shutdownModal').modal('show');
-		});
-
-		$('#shutdownConfirmButton').click(
-				function(event) {
-
-					$.ajax({
-						method : "POST",
-						url : "shutdown",
-						success : function(data) {
-
-							var result = $.parseJSON(data);
-
-							sp.displayMessage(result.msg, 'success');
-
-						},
-						error : function(msg) {
-							sp.displayMessage(
-									'Failed to shutdown the syringe pump.',
-									'danger');
-						}
-					});
-
-				});
-
 	};
 
 	sp.setupAdvancedFeaturesButton = function() {
@@ -241,5 +215,82 @@ var sp = {};
 		})
 
 	};
+	
+	$.get("modals.html", function(data){
+		var theModals = {};
 
+		// Any element containing Bootbox.js data name
+		$(document).on("click", "[data-bb]", function(e) {
+			e.preventDefault();
+			var type = $(this).data("bb");
+
+			if (typeof theModals[type] === 'function') {
+				theModals[type]();
+			}
+		});
+
+		var $modalContent = $(data);
+		
+		theModals.about = function() {
+			bootbox.dialog({
+				title: "About",
+			    message: $modalContent.find("#aboutDialogContent").html(),
+			    onEscape: function() { /* Do nothing */ },
+			    backdrop: true
+			
+			});
+		};
+		
+		theModals.contact = function() {
+			bootbox.dialog({
+				title: "Contact",
+			    message: $modalContent.find("#contactDialogContent").html(),
+			    onEscape: function() { /* Do nothing */ },
+			    backdrop: true
+			});
+		};
+		
+		theModals.shutdown = function() {
+			bootbox.dialog({
+				title: "Shutdown Pump?",
+			    message: $modalContent.find("#shutdownDialogContent").html(),
+			    onEscape: function() { /* Do nothing */ },
+			    backdrop: true,
+			    buttons: {
+			          cancel: {
+			            label: "Cancel",
+			            className: "btn-default",
+			            callback: function() {
+			              /* Do nothing */
+			            }
+			          },
+			          ok: {
+			            label: "OK",
+			            className: "btn-primary",
+			            callback: function() {
+			            	$.ajax({
+								method : "POST",
+								url : "shutdown",
+								success : function(data) {
+
+									var result = $.parseJSON(data);
+
+									sp.displayMessage(result.msg, 'success');
+
+								},
+								error : function(msg) {
+									sp.displayMessage(
+											'Failed to shutdown the syringe pump.',
+											'danger');
+								}
+							});      
+			            }
+			          }
+			    }
+			});
+		};
+	
+	});
+
+	
 })(sp);
