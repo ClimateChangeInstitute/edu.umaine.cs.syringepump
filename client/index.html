@@ -91,10 +91,13 @@
 
 			<div class="form-group">
 				<div class="col-xs-12" style="text-align: center">
-					<button id="shutdownButton" class="btn btn-danger" type="button" data-bb="shutdown">Shutdown
-						Computer</button>
+					<button id="shutdownButton" class="btn btn-danger" type="button"
+						data-bb="shutdown">Shutdown Computer</button>
 				</div>
 			</div>
+
+			<!-- ******************************************************* -->
+			<!-- *************** BEGIN ADVANCED FEATURES *************** -->
 
 			<div class="form-group">
 				<a id="advancedFeatures" class="col-xs-12" href="#">Advanced
@@ -102,8 +105,12 @@
 			</div>
 
 			<div id="advancedFeaturesContent" style="display: none;">
-
+				<h2 class="page-header">Advanced Features</h2>
 				<!-- Load time -->
+				<h3>Load Time</h3>
+				<p class="lead">The following load time is a reasonable speed to
+					load 1 ml of fluid at 200 steps per revolution. Setting this value
+					too low may result in the motor skipping steps.</p>
 				<div class="form-group">
 					<label for="loadTimeSpinner"
 						class="col-xs-12 col-sm-3 form-control-label">Load Time
@@ -115,9 +122,18 @@
 				</div>
 				<!-- End Load time -->
 
+				<h2 class="page-header">Calibration Settings</h2>
 
+				<p class="lead">
+					The following settings directly affect the amount of fluid that is
+					loaded and discharged by the syringe pump. Using the <a
+						href="calibrate.html">calibration page</a> is the preferred way to
+					change these settings. Tweak these settings only if you know what
+					you are doing. You can make these settings the default by clicking
+					the save button at the bottom of the page.
+				</p>
 
-				<!-- Step per ml -->
+				<!-- Syringe Diameter -->
 				<div class="form-group">
 					<label for="syringeDiameterSpinner"
 						class="col-xs-12 col-sm-3 form-control-label">Syringe
@@ -127,7 +143,7 @@
 							class="form-control" value="15" required="required" min="0">
 					</div>
 				</div>
-				<!-- Step per ml -->
+				<!-- Syringe Diameter -->
 
 
 				<!-- pitch per revolution -->
@@ -164,6 +180,12 @@
 				</div>
 
 			</div>
+			<!-- Advanced features content -->
+
+
+			<!-- **************** END ADVANCED FEATURES **************** -->
+			<!-- ******************************************************* -->
+
 		</form>
 	</div>
 	<!-- /.container -->
@@ -200,7 +222,7 @@
 			sp.setupPushButtons();
 
 			sp.setupAdvancedFeaturesButton();
-			
+
 			$("#motorControls").load("motorSteps.html");
 
 		});
