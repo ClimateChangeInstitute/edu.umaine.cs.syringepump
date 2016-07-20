@@ -1,8 +1,8 @@
 {
- "defaultLoadAmount_ml": 1, 
- "defaultLoadTime_sec": 20, 
+ "defaultLoadAmount_ml": 1.0, 
+ "defaultLoadTime_sec": 20.0, 
  "defaultPitch_mmPerRev": 0.8, 
- "defaultStepsPerRevolution": 200, 
- "defaultSyringeDiameter_mm": 15, 
- "defaultUnloadTime_min": 30
+ "defaultStepsPerRevolution": 200.0, 
+ "defaultSyringeDiameter_mm": 15.0, 
+ "defaultUnloadTime_min": 30.0
 }

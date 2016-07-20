@@ -216,6 +216,61 @@ var sp = {};
 
 	};
 	
+	$('#saveDefaultSettingsButton').click(
+			function() {
+				
+					var defaultLoadAmnt_ml = $('#loadAmountSpinner').val();
+					var defaultLoadTime_sec = $('#loadTimeSpinner').val();
+					var defaultPitch_mmPerRev = $('#pitchPerRevSpinner').val();
+					var defaultStepsPerRevolution = $('#stepsPerRevSpinner').val();
+					var defaultSyringeDiameter_mm = $('#syringeDiameterSpinner').val();
+					var defaultUnloadTime_min = $('#unloadTimeSpinner').val();
+					
+					bootbox.confirm("Are you sure you want to save values as default settings?", function(result) {
+						  if (result) {
+							  $.ajax({
+									method : "POST",
+									url : "defaults",
+									data : {
+										action : 'save',
+										vals : {
+											 "defaultLoadAmount_ml": defaultLoadAmnt_ml,
+											 "defaultLoadTime_sec": defaultLoadTime_sec, 
+											 "defaultPitch_mmPerRev": defaultPitch_mmPerRev, 
+											 "defaultStepsPerRevolution": defaultStepsPerRevolution, 
+											 "defaultSyringeDiameter_mm": defaultSyringeDiameter_mm, 
+											 "defaultUnloadTime_min": defaultUnloadTime_min
+										}
+									},
+									success : function(data) {
+										var $data = $.parseJSON(data);
+										bootbox.dialog({
+											title: "Load Time Saved",
+										    message: $data.msg,
+										    onEscape: function() {
+										    	/* Do nothing */
+										    },
+										    backdrop: true
+										});
+									},
+									error : function(data) {
+										bootbox.dialog({
+											title: "Failed Saving",
+										    message: "Hmm... something went wrong.",
+										    onEscape: function() { /*
+																	 * Do
+																	 * nothing
+																	 */ },
+										    backdrop: true
+										});
+									}
+								});
+						  }
+						}); 
+					
+				});
+
+	
 	$.get("modals.html", function(data){
 		var theModals = {};
 

@@ -106,6 +106,9 @@
 
 			<div id="advancedFeaturesContent" style="display: none;">
 				<h2 class="page-header">Advanced Features</h2>
+				<p class="lead">Tweak these settings only if you know what you
+					are doing. You can make these settings the default by clicking the
+					save button at the bottom of the page.</p>
 				<!-- Load time -->
 				<h3>Load Time</h3>
 				<p class="lead">The following load time is a reasonable speed to
@@ -122,15 +125,13 @@
 				</div>
 				<!-- End Load time -->
 
-				<h2 class="page-header">Calibration Settings</h2>
+				<h3 class="page-header">Calibration Settings</h3>
 
 				<p class="lead">
 					The following settings directly affect the amount of fluid that is
 					loaded and discharged by the syringe pump. Using the <a
 						href="calibrate.html">calibration page</a> is the preferred way to
-					change these settings. Tweak these settings only if you know what
-					you are doing. You can make these settings the default by clicking
-					the save button at the bottom of the page.
+					change these settings.
 				</p>
 
 				<!-- Syringe Diameter -->
@@ -176,6 +177,14 @@
 						<p>The amount of millimeters the plunger will move is
 							calculated as shown below.</p>
 						<pre>mm = ml / mlPerRev * pitchPerRev</pre>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-4 col-sm-push-4">
+						<button id="saveDefaultSettingsButton"
+							class="btn btn-default btn-block" type="button">Save
+							Defaults</button>
 					</div>
 				</div>
 
