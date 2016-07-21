@@ -44,7 +44,7 @@ def getSyringePump():
         print "Using Arduino motor controller"
     except:
         try:
-            #from motors import MotorEmulator, ArduinoMotor, RaspberryPiMotor
+            # from motors import MotorEmulator, ArduinoMotor, RaspberryPiMotor
             motor = RaspberryPiMotor(stepsPerRev)
             print "Using Raspberry Pi Adafruit Python motor controller"
         except:
@@ -103,6 +103,11 @@ def unload():
     
     return json.dumps(obj)
 
+@route('/reset', method='POST')
+def reset():
+    syringePump.reset()
+    
+
 @route('/moveSteps', method='POST')
 def moveSteps():
     
@@ -143,16 +148,23 @@ def info():
     return json.dumps(obj)
 
 def dictionaryVals(d, s):
+    '''
+    Extract a dictionary from a JSON object.  For example, given the object 
+    { pre[key1]: val1, pre[key2]: val2 } and prefix 'pre', the result would 
+    be {key1: val1, key2: val2}. 
+    @param d: dictionary
+    @param s: string prefix
+    '''
     prefix = s + '['
     start = len(prefix)
     result = {}
-    for k,v in d.iteritems():
+    for k, v in d.iteritems():
         if k.startswith(prefix):
             result[k[start:k.index(']')]] = v
     
     return result
 
-@route('/defaults', method=['GET','POST'])
+@route('/defaults', method=['GET', 'POST'])
 def defaults():
     
     action = request.params['action']
@@ -166,7 +178,7 @@ def defaults():
         
         vals = dictionaryVals(request.params, 'vals')
         
-        for k,v in vals.iteritems():
+        for k, v in vals.iteritems():
             data[k] = float(v)
         
         with open(SETTINGS_FILE, 'w') as f:    
