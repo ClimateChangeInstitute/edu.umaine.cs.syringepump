@@ -58,9 +58,22 @@
 						},
 						success : function(data) {
 
-							/* Do nothing */
-							console.log('Done!');
+							sp.displayMessage("Moving motor " + loadSteps + " steps", 'info');
 
+							var result = $.parseJSON(data);
+
+							var min = result.start;
+							var max = result.end;
+							if (result.end < result.start) {
+								min = result.end;
+								max = result.start;
+							}
+
+							console.log(min + " " + max);
+
+							sp.checkLevels(300, min, max,
+									result.start < result.end, "steps");
+							
 						},
 						error : function(msg) {
 							console.log('Failed to move motor!');
@@ -85,7 +98,7 @@
 					data : { /* No Data */
 					},
 					success : function(data) {
-						/* Do nothing */
+						sp.displayMessage("Motor position reset to 0.", 'info');
 					},
 					error : function(msg) {
 						console.log('Failed to reset');

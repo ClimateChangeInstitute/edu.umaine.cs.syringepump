@@ -7,7 +7,7 @@
 var sp = {};
 
 (function(sp) {
-
+	
 	/**
 	 * @param message
 	 *            Message to display
@@ -60,6 +60,13 @@ var sp = {};
 
 	};
 
+	/**
+	 * @param updateTime {number} How frequently to poll for info
+	 * @param min {number}
+	 * @param max {number}
+	 * @param filling {boolean}
+	 * @param infoType {string} amnt or steps
+	 */
 	sp.checkLevels = function(updateTime, min, max, filling, infoType) {
 
 		var startTime = null;
