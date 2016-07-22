@@ -19,6 +19,13 @@ var sp = {};
 		$('#syringeStatus').addClass('alert alert-' + type);
 		$('#syringeStatus').text(message);
 	};
+	
+	sp.calculateStepsPerMl = function(diameter, pitchPerRev, stepsPerRev) {
+		var r = diameter / 2.0;
+		var mlPerRev = 3.14159 * r * r / 1000.0 * pitchPerRev;
+		
+		return Math.round(stepsPerRev / mlPerRev);
+	};
 
 	sp.convertMlToMm = function(mlAmnt) {
 		// Result should be in millimeters
@@ -61,11 +68,16 @@ var sp = {};
 	};
 
 	/**
-	 * @param updateTime {number} How frequently to poll for info
-	 * @param min {number}
-	 * @param max {number}
-	 * @param filling {boolean}
-	 * @param infoType {string} amnt or steps
+	 * @param updateTime
+	 *            {number} How frequently to poll for info
+	 * @param min
+	 *            {number}
+	 * @param max
+	 *            {number}
+	 * @param filling
+	 *            {boolean}
+	 * @param infoType
+	 *            {string} amnt or steps
 	 */
 	sp.checkLevels = function(updateTime, min, max, filling, infoType) {
 
@@ -250,9 +262,15 @@ var sp = {};
 										}
 									},
 									success : function(data) {
+										
+										$('#stepsPerMlSpan').html(sp.calculateStepsPerMl(
+												$('#syringeDiameterSpinner').val(),
+												$('#pitchPerRevSpinner').val(),
+												$('#stepsPerRevSpinner').val()));
+										
 										var $data = $.parseJSON(data);
 										bootbox.dialog({
-											title: "Load Time Saved",
+											title: "Default Settings Saved",
 										    message: $data.msg,
 										    onEscape: function() {
 										    	/* Do nothing */

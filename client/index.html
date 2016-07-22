@@ -131,7 +131,8 @@
 					The following settings directly affect the amount of fluid that is
 					loaded and discharged by the syringe pump. Using the <a
 						href="calibrate.html">calibration page</a> is the preferred way to
-					change these settings.
+					change these settings. Currently, the number of steps per 1 ml of
+					fluid is <span id="stepsPerMlSpan"></span>.
 				</p>
 
 				<!-- Syringe Diameter -->
@@ -141,7 +142,8 @@
 						Diameter</label>
 					<div class="col-xs-12 col-sm-6">
 						<input id="syringeDiameterSpinner" type="number"
-							class="form-control" value="15" required="required" min="0" step="any">
+							class="form-control" value="15" required="required" min="0"
+							step="any">
 					</div>
 				</div>
 				<!-- Syringe Diameter -->
@@ -221,20 +223,25 @@
 	<script type="text/javascript" src="js/syringepump.js"></script>
 
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#header").load("header.html", function() {
-				$("#homeNav").addClass("active");
-			});
+		$(document).ready(
+				function() {
+					$("#header").load("header.html", function() {
+						$("#homeNav").addClass("active");
+					});
 
-			sp.setupDefaultValues();
+					sp.setupDefaultValues();
 
-			sp.setupPushButtons();
+					sp.setupPushButtons();
 
-			sp.setupAdvancedFeaturesButton();
+					sp.setupAdvancedFeaturesButton();
 
-			$("#motorControls").load("motorSteps.html");
+					$("#motorControls").load("motorSteps.html");
 
-		});
+					$('#stepsPerMlSpan').html(
+							sp.calculateStepsPerMl($('#syringeDiameterSpinner')
+									.val(), $('#pitchPerRevSpinner').val(), $(
+									'#stepsPerRevSpinner').val()));
+				});
 	</script>
 </body>
 </html>

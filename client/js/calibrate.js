@@ -93,9 +93,16 @@ var calibrationSetup = function() {
 					var newDiameter = 2 * Math.sqrt(m * mm3PerMl * stepsPerRev
 							/ (3.14159 * currentPitch));
 
-					// We'll ignore the newPitch and just use the newDiameter for now
+					// We'll ignore the newPitch and just use the newDiameter
+					// for now
 					
-					bootbox.confirm("Are you sure you want to save the new calibration settings?", function(result) {
+					var stepsPerMl = sp.calculateStepsPerMl(
+							newDiameter,
+							currentPitch,
+							stepsPerRev);
+					
+					bootbox.confirm("Are you sure you want to save the new calibration settings? " +
+							"The new number of steps per 1 ml will be " + stepsPerMl + ".", function(result) {
 						  if (result) {
 							  $.ajax({
 									method : "POST",
@@ -122,7 +129,10 @@ var calibrationSetup = function() {
 										bootbox.dialog({
 											title: "Failed Saving",
 										    message: "Hmm... something went wrong.",
-										    onEscape: function() { /* Do nothing */ },
+										    onEscape: function() { /*
+																	 * Do
+																	 * nothing
+																	 */ },
 										    backdrop: true
 										});
 									}
