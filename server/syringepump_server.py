@@ -143,7 +143,6 @@ def info():
     elif infoType == "steps" :
         obj['msg'] = "Steps motor moved"
         obj['steps'] = syringePump.motor.getCurrentstep()
-        print 'steps %d' % obj['steps']
     
     return json.dumps(obj)
 

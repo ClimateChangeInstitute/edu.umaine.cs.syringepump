@@ -64,7 +64,7 @@ class SyringePump(object):
         '''
         direction = Motor.FORWARD if steps >= 0 else Motor.BACKWARD
         
-        print "Starting step position %f " % self.motor.getCurrentstep()
+        print "Starting step position %f, %d " % (self.motor.getCurrentstep(), direction)
         
         self.motor.step(abs(steps), direction, Motor.SINGLE, time_ms)
         

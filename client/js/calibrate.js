@@ -162,7 +162,7 @@ var calibrationSetup = function() {
 										url : "moveSteps",
 										data : {
 											steps : loadSteps,
-											time_ms : Math.abs(loadSteps * 5)
+											time_ms : Math.abs(loadSteps * 5) 
 										},
 										success : function(data) {
 

@@ -183,7 +183,7 @@ class ArduinoMotor(Motor):
     def oneStep(self, direction, style):
         return self.__executeSteps(1, style, direction, 1, 1)
 
-    def step(self, steps, direction, style, time, updateSteps):
+    def step(self, steps, direction, style, time, updateSteps=20):
         self.__executeSteps(steps, style, direction, time, updateSteps)
     
     def turnOffMotor(self):
@@ -204,30 +204,26 @@ class RaspberryPiMotor(Motor):
         sign = 1
         if Motor.BACKWARD == direction:
             sign = -1
-        
+
         self.motor.setSpeed(float(numSteps) / self.getStepsPerRevolution() / time_ms * 1000.0 * 60)
-        
-        revs = numSteps / self.getStepsPerRevolution()  
+
+        revs = int(numSteps / self.getStepsPerRevolution())  
         for _ in range(revs):
-            self.motor.step(self.getStepsPerRevolution(), direction, stepType)
+            self.motor.step(int(self.getStepsPerRevolution()), direction, stepType)
             self.setCurrentstep(self.getCurrentstep() + self.getStepsPerRevolution() * sign)
-        
+
         remainingSteps = numSteps - (revs * self.getStepsPerRevolution())
 
-        print "Starting remaining amount... %d " % remainingSteps
-
-        self.motor.step(remainingSteps, direction, stepType)
+        self.motor.step(int(remainingSteps), direction, stepType)
         self.setCurrentstep(self.getCurrentstep() + remainingSteps * sign)
 
-        print "Self.position = %f" % self.position
-
-        return self.getPosition()
+        return self.getCurrentstep()
             
     def oneStep(self, direction, style):
         return self.motor.oneStep(direction, style)
 
-    def step(self, steps, direction, style, time_ms, updateSteps):
-        self.motor.step(steps, direction, style)
+    def step(self, steps, direction, style, time_ms, updateSteps=20):
+        self.__executeSteps(steps, style, direction, time_ms, updateSteps)
     
     def turnOffMotor(self):
         self.motor.run(Adafruit_MotorHAT.RELEASE)
