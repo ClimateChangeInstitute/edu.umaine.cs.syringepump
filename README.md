@@ -2,6 +2,8 @@
 
 A syringe pump controller system for Raspberry Pi and Arduino.
 
+The case for the Raspberry Pi is at [RP2](http://www.thingiverse.com/thing:922740).
+
 ## Setup
 
 TODO
