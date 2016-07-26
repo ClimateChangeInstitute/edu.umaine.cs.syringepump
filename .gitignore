@@ -1,3 +1,4 @@
+/Arduino/build-uno
 *.pyc
 *.elf
 *.hex
