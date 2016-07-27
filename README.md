@@ -15,31 +15,6 @@ at [RPi2](https://github.com/markroyer/rpi2-adafruit-motor-hat-case).
 The syringe pump control software is written in Python and requires
 Python 2.7 to be installed.
 
-To start the syringe pump controller, `cd` to the `server` directory
-and type:
-
-```bash
-python syringepump_server.py
-```
-
-This will generate the following output.
-
-```bash
-Using motor emulation.
-Bottle v0.13-dev server starting up (using WSGIRefServer())...
-Listening on http://0.0.0.0:8080/
-Hit Ctrl-C to quit.
-```
-
-This starts the syringe pump controller server on port 8080.
-Directing a web browser to
-
-```
-http://localhost:8080/index.html
-```
-
-opens the syringe pump controller page.
-
 The syringe pump controller can operate in three separate modes: motor
 emulation, Adafruit Motor HAT (via Raspberry Pi or some Linux)
 operated, or Arduino (with Adafruit motor shield) operated. The type
@@ -79,6 +54,45 @@ sudo apt-get install python-serial
 ```
 
 ## Usage
+
+This section contains description of standard syringe pump usage.
+
+### Starting the Controller
+
+To start the syringe pump controller, `cd` to the `server` directory
+and type:
+
+```bash
+python syringepump_server.py
+```
+
+This will generate the following output.
+
+```bash
+Using motor emulation.
+Bottle v0.13-dev server starting up (using WSGIRefServer())...
+Listening on http://0.0.0.0:8080/
+Hit Ctrl-C to quit.
+```
+
+This starts the syringe pump controller server on port 8080.
+Directing a web browser to
+
+```
+http://localhost:8080/index.html
+```
+
+opens the syringe pump controller page.
+
+### Callibrating the Syringe Pump
+
+TODO
+
+### Standard Options
+
+TODO
+
+### Advanced Features
 
 TODO
 
