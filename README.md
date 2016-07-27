@@ -109,6 +109,8 @@ and the screw pitch.
 
 ### Standard Options
 
+#### Basic Operation
+
 Assuming the syringe pump has been calibrated, then the standard
 operation is quite simple.  The amount to be loaded is specified (the
 default value is 1ml). Next, the **Load Syringe!** button is pressed.
@@ -117,6 +119,27 @@ The syringe loads the fluid in approximately 20 seconds.
 Next, the amount of time to take for the fluid to be discharged is
 specified (the default is 30min). The **Unload Syringe!** button is
 pressed, and the fluid begins to empty at the specified rate.
+
+#### Motor Adjustments
+
+There are a number of buttons listed below the basic operations for
+moving the syringe plunger.  The options are 100, 1000, and 2000 in
+either direction.  There is also the option to reset the motors
+initial position back to zero (the motor control software calculates
+load amounts relative to this position).
+
+#### System Shutdown
+
+There is also a button to shutdown the system. This button only works
+if the system password has been specified at the top of the
+`syringepump_server.py` file.  The line looks like the following.
+
+```python
+SYSTEM_PASS = ''  # set this if you want to be able to shutdown the server
+```
+
+You can decide for yourself if this is a security risk for your system
+and setup.
 
 ### Advanced Features
 
