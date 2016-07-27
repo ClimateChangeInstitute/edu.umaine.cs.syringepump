@@ -84,9 +84,28 @@ http://localhost:8080/index.html
 
 opens the syringe pump controller page.
 
-### Callibrating the Syringe Pump
+### Calibrating the Syringe Pump
 
-TODO
+The first action that should occur when the syringe pump is initially
+run, is to perform pump calibration. Clicking on the **Calibrate**
+button starts the calibration wizard.  This makes the syringe pump
+perform a series of three loads and unloads.  Each loading and
+unloading is a larger amount of motor steps, which results in a larger
+amount of fluid being loaded and discharged.  The loaded amounts are
+as follows.
+
+1. 1000 motor steps
+2. 2000 motor steps
+3. 4000 motor steps
+
+Each time the motor loads the fluid and then discharges it, the amount
+of fluid is measured and recorded.
+
+Finally, a linear regression is performed on the motor steps vs the
+amount of fluid, and this formula is used to calibrate the syringe
+pump. This allows the syringe pump controller to get very accurate
+results without strictly relying on measurements of the syringe size
+and the screw pitch.
 
 ### Standard Options
 
