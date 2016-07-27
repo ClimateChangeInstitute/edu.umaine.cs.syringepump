@@ -14,7 +14,7 @@ To start the syringe pump controller, `cd` to the `server` directory and type:
 python syringepump_server.py
 ```
 
-This will generate output as follows.
+This will generate the following output.
 
 ```bash
 Using motor emulation.
@@ -31,7 +31,17 @@ http://localhost:8080/index.html
 
 opens the syringe pump controller page.
 
-The syringe pump controller can operate in three separate modes: motor emulation, Raspberry Pi operated, or Arduino operated. The type of the motor operation is automatically selected when the server is started.  If an Arduino is detected via serial connection, then it is used.  If the Arduino is not found, then the Adafruit Motor HAT libraries are searched for, and if they are found, they are utilized.  If neither of those libraries are found, then the server falls back to motor emulation which is useful for testing the client.
+The syringe pump controller can operate in three separate modes: motor emulation, Adafruit Motor HAT (via Raspberry Pi or some linux) operated, or Arduino (with Adafruit motor shield) operated. The type of the motor operation is automatically selected when the server is started.  If an Arduino is detected via serial connection, then it is used.  If the Arduino is not found, then the Adafruit Motor HAT libraries are searched for, and if they are found, they are utilized.  If neither of those libraries are found, then the server falls back to motor emulation which is useful for testing the client. The rest of the setup will be broken up for each of these types.
+
+### Emulation Setup
+
+Nothing further to setup. Everything should work as long as the Python 2.7 is installed.
+
+### Adafruit Motor HAT (via Raspberry Pi)
+
+TODO
+
+### Arduino (with Adafruit motor shield)
 
 TODO
 
