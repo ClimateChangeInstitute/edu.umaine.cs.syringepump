@@ -109,7 +109,14 @@ and the screw pitch.
 
 ### Standard Options
 
-TODO
+Assuming the syringe pump has been calibrated, then the standard
+operation is quite simple.  The amount to be loaded is specified (the
+default value is 1ml). Next, the **Load Syringe!** button is pressed.
+The syringe loads the fluid in approximately 20 seconds.
+
+Next, the amount of time to take for the fluid to be discharged is
+specified (the default is 30min). The **Unload Syringe!** button is
+pressed, and the fluid begins to empty at the specified rate.
 
 ### Advanced Features
 
@@ -123,6 +130,6 @@ The project is licensed under the terms of the
 <!--
 
 LocalWords:  Arduino Adafruit RPi cd syringepump py dev WSGIRefServer
-LocalWords:  Ctrl TODO GPL pyserial sudo
+LocalWords:  Ctrl TODO GPL pyserial sudo min
 
 -->
