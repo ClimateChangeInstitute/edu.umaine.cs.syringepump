@@ -2,6 +2,8 @@
 
 A syringe pump controller system for Raspberry Pi and Arduino.
 
+The syringe pump controller uses the [Adafruit motor HAT v2.3](https://www.adafruit.com/product/2348) for Raspberry Pi and the [Adafruit motor shield](https://www.adafruit.com/products/1438) for Arduino.  
+
 A case for the Raspberry Pi with the Adafruit motor HAT can be found at [RPi2](https://github.com/markroyer/rpi2-adafruit-motor-hat-case).
 
 ## Setup
