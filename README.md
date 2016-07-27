@@ -2,9 +2,11 @@
 
 A syringe pump controller system for Raspberry Pi and Arduino.
 
-The case for the Raspberry Pi is at [RP2](http://www.thingiverse.com/thing:922740).
+A case for the Raspberry Pi with the Adafruit motor HAT can be found at [RPi2](https://github.com/markroyer/rpi2-adafruit-motor-hat-case).
 
 ## Setup
+
+The syringe pump control software is written in Python and requires Python 2.7 to be installed.
 
 TODO
 
