@@ -66,7 +66,17 @@ will select it by default during startup.
 
 ### Arduino (with Adafruit motor shield)
 
-TODO
+To use the syringe controller with an Arduino with an Adafruit motor
+shield, the pyserial library must be installed so that the controller
+can communicate with the Arduino.  The pyserial library can be
+installed a number of ways depending on what system is being run.
+
+On Debian based systems the pyserial library can be installed by
+performing an apt update and then installing
+
+```bash
+sudo apt-get install python-serial
+```
 
 ## Usage
 
@@ -77,5 +87,9 @@ TODO
 The project is licensed under the terms of the
 [GPL3](https://www.gnu.org/licenses/gpl-3.0.en.html) license.
 
+<!--
+
 LocalWords:  Arduino Adafruit RPi cd syringepump py dev WSGIRefServer
-LocalWords:  Ctrl TODO GPL
+LocalWords:  Ctrl TODO GPL pyserial sudo
+
+-->
