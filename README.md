@@ -143,6 +143,31 @@ and setup.
 
 ### Advanced Features
 
+This section contains settings that most users are unlikely to edit
+(at least directly).
+
+#### Load Time
+
+The default load time of 20 seconds is a reasonable speed to load 1 ml
+of fluid at 200 motor steps per revolution. Setting its value too low
+may result in the motor skipping steps.  The system is intended to
+move the syringe pump slowly, so if a decrease in this value is needed,
+then changes to syringe and motor gearing may be required.
+
+#### Calibration Settings
+
+These settings directly affect the amount of fluid that is loaded and
+discharged by the syringe pump. Using the calibration page is the
+preferred way to change these settings. By default, the number of
+steps per 1 ml of fluid is 1415, and the following settings are as
+shown in the table below.
+
+| Setting              | Default Value |
+| -------------------- | -------------:|
+| Syringe Diameter     |            15 |
+| Pitch (# mm / 1 rev) |           0.8 |
+| # Steps / 1 rev)     |           200 |
+
 TODO
 
 ## License
@@ -153,6 +178,6 @@ The project is licensed under the terms of the
 <!--
 
 LocalWords:  Arduino Adafruit RPi cd syringepump py dev WSGIRefServer
-LocalWords:  Ctrl TODO GPL pyserial sudo min
+LocalWords:  Ctrl TODO GPL pyserial sudo min rev
 
 -->
