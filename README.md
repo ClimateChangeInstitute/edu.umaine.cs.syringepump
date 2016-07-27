@@ -31,6 +31,8 @@ http://localhost:8080/index.html
 
 opens the syringe pump controller page.
 
+The syringe pump controller can operate in three separate modes: motor emulation, Raspberry Pi operated, or Arduino operated. The type of the motor operation is automatically selected when the server is started.  If an Arduino is detected via serial connection, then it is used.  If the Arduino is not found, then the Adafruit Motor HAT libraries are searched for, and if they are found, they are utilized.  If neither of those libraries are found, then the server falls back to motor emulation which is useful for testing the client.
+
 TODO
 
 ## Usage
