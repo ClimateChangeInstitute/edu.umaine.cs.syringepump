@@ -139,6 +139,7 @@ class ArduinoMotor(Motor):
     stepTypes = { 1: 'single', 2: 'double', 3: 'interleave', 4: 'microstep'}
     
     def __init__(self, stepsPerRev=200, port='/dev/ttyACM0', baud=9600):
+        super(ArduinoMotor, self).__init__(0, stepsPerRev)
         self.stepsPerRevolution = stepsPerRev
         self.port = port
         self.baud = baud
@@ -155,7 +156,7 @@ class ArduinoMotor(Motor):
         self.__writeln(self.stepTypes[stepType])  # step type
         self.__writeln(str(time_ms))  # time
         self.__writeln(str(numSteps))  # steps
-        self.__writeln(updateSteps)  # update steps
+        self.__writeln(str(updateSteps))  # update steps
         self.__writeln(str(direction))  # Motor.FORWARD or Motor.BACKWARD
             
         init = None
@@ -163,9 +164,12 @@ class ArduinoMotor(Motor):
         dirSign = 1
         if Motor.BACKWARD == direction :
             dirSign = -1
+            
+        print "Starting" 
         
         for line in self.ard :
             val = line.rstrip()
+            print "Got val %s" % val 
             if init == None:
                 init = val            
             elif val != 'done':  # Update position
