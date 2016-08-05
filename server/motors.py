@@ -165,22 +165,21 @@ class ArduinoMotor(Motor):
         if Motor.BACKWARD == direction :
             dirSign = -1
             
-        print "Starting" 
+        print "Starting number of steps = %d, stepType = %d, direction = %d" % (numSteps, stepType, direction) 
         
+        startVal = self.getCurrentstep()
         for line in self.ard :
             val = line.rstrip()
-            print "Got val %s" % val 
+            
             if init == None:
                 init = val            
-            elif val != 'done':  # Update position
-                self.setCurrentstep(self.setCurrentstep(self.getCurrentstep() + int(val) * dirSign))
-                print self.getCurrentstep() 
+            elif val != 'done' and val.isdigit() :  # Update position
+                self.setCurrentstep(startVal + int(val) * dirSign) 
+                print "Moved %d steps" % int(val)
             
-            print val
             if val == 'done':
                 print self.ard.readline()  # Last line 
                 break  # We're done!
-        
 
         return self.getCurrentstep()
                    
