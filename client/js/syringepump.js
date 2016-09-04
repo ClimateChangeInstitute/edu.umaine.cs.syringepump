@@ -111,6 +111,10 @@ var sp = {};
 								maxVal = +sp.convertMmToMl(max).toFixed(1);
 							var percent = +(curVal / maxVal * 100).toFixed(1);
 
+							// Also round stopping conditions
+							min = +min.toFixed(1);
+							max = +max.toFixed(1);
+							
 							$('#syringeProgress').css('width', percent + '%');
 							$('#syringeProgress').text(
 									curVal + ' (' + percent + '%)');
