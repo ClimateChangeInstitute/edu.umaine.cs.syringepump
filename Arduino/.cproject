@@ -16,5 +16,7 @@
 		<pathentry kind="out" path=""/>
 		<pathentry kind="out" path="build"/>
 		<pathentry kind="out" path="build/.default"/>
+		<pathentry kind="out" path="build/.default"/>
+		<pathentry kind="out" path="build/arduino"/>
 	</storageModule>
 </cproject>

@@ -2,4 +2,4 @@ config/uno/boardName=Arduino/Genuino Uno
 config/uno/packageName=arduino
 config/uno/platformName=Arduino AVR Boards
 eclipse.preferences.version=1
-libraries=["Adafruit Motor Shield V2 Library","Wire"]
+libraries=["Adafruit Motor Shield V2 Library",{"package"\:"arduino","platform"\:"avr","library"\:"Wire"}]
