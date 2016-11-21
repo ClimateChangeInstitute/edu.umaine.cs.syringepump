@@ -119,21 +119,26 @@ var sp = {};
 							$('#syringeProgress').text(
 									curVal + ' (' + percent + '%)');
 
-							
-							if (infoType === "amnt" && result['isRunning'] && filling && mm < max) {
-								setTimeout(cls, updateTime, max, true);
-							} else if (infoType === "amnt" && result['isRunning'] && !filling && min < mm) {
-								setTimeout(cls, updateTime, max, false);
-							} else {
-
+							if (filling && mm < max) {
 								if (infoType === "amnt" && !result['isRunning']) {
 									sp
 									.displayMessage(
 											'Syringe pump stopped',
 											'danger');
 									return; // Stop polling
-								} else {
-								
+								}
+								setTimeout(cls, updateTime, max, true);
+							} else if (!filling && min < mm) {
+								if (infoType === "amnt" && !result['isRunning']) {
+									sp
+									.displayMessage(
+											'Syringe pump stopped',
+											'danger');
+									return; // Stop polling
+								}
+								setTimeout(cls, updateTime, max, false);
+							} else {
+
 								var diff = ((new Date().getTime() - startTime) / 1000.0);
 
 								// Round it to nearest hundreth
@@ -147,7 +152,6 @@ var sp = {};
 
 								startTime = null;
 
-								}
 							}
 						}
 					});
@@ -164,6 +168,26 @@ var sp = {};
 				.click(
 						function(event) {
 
+							
+							$.ajax({
+								method : "GET",
+								url : "info",
+								data : {
+									type : 'amnt'
+								},
+								success : function(data) {
+							
+
+									var fr = $.parseJSON(data);
+									
+									if (fr['isRunning']) {
+										
+										bootbox.alert("Syringe currently running. Please cancel the current operation by clicking the stop button.", 
+												function(result){  });
+										return;
+										
+									}
+							
 							// time should be in milliseconds
 							$
 									.ajax({
@@ -196,6 +220,11 @@ var sp = {};
 													'danger');
 										}
 									});
+							
+								},
+								error: function(msg){
+									console.log('Unable to get motor info!');
+								}});
 
 						});
 
@@ -203,8 +232,33 @@ var sp = {};
 		$("#unloadButton")
 				.click(
 						function(event) {
+							
+							
+							$.ajax({
+								method : "GET",
+								url : "info",
+								data : {
+									type : 'amnt'
+								},
+								success : function(data) {
+							
 
-							var toUnloadAmnt = new Number($('#syringeProgress').text().split('(')[0]) * $('#loadAmountSpinner').val();
+									var fr = $.parseJSON(data);
+									
+									if (fr['isRunning']) {
+										
+										bootbox.alert("Syringe currently running. Please cancel the current operation by clicking the stop button.", 
+												function(result){  });
+										return;
+										
+									}
+
+									var toUnloadAmnt = new Number($('#syringeProgress').text().split('(')[0]);
+									
+									// Only unload specified amount if smaller
+									if (toUnloadAmnt >  $('#loadAmountSpinner').val()) {
+										toUnloadAmnt = $('#loadAmountSpinner').val();
+									}
 							
 							$
 									.ajax({
@@ -236,6 +290,12 @@ var sp = {};
 										}
 									});
 
+								},
+								error: function(msg){
+									console.log('Unable to get motor info!');
+								}});
+
+							
 						});
 
 	};

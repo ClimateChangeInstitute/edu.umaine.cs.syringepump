@@ -54,6 +54,26 @@
 			var initStepButton = function(buttonName, loadSteps) {
 				// Initialize the load button click event
 				$('#' + buttonName).click(function(event) {
+					
+					$.ajax({
+						method : "GET",
+						url : "info",
+						data : {
+							type : 'amnt'
+						},
+						success : function(data) {
+					
+
+							var fr = $.parseJSON(data);
+							
+							if (fr['isRunning']) {
+								
+								bootbox.alert("Syringe currently running. Please cancel the current operation by clicking the stop button.", 
+										function(result){  });
+								return;
+								
+							}
+							
 					// time should be in milliseconds
 					$.ajax({
 						method : "POST",
@@ -85,6 +105,11 @@
 							console.log('Failed to move motor!');
 						}
 					});
+					
+						},
+						error: function(msg){
+							console.log('Unable to get motor info!');
+						}});
 
 				});
 			};
