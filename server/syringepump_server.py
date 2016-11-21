@@ -144,6 +144,7 @@ def info():
     if infoType == "amnt" :
         obj['msg'] = "Position of motor"
         obj['amnt'] = syringePump.getPosition()
+        obj['isRunning'] = syringePump.isRunning()
     elif infoType == "steps" :
         obj['msg'] = "Steps motor moved"
         obj['steps'] = syringePump.motor.getCurrentstep()

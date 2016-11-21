@@ -97,7 +97,7 @@ var sp = {};
 						success : function(data) {
 
 							var result = $.parseJSON(data);
-
+							
 							var mm = result[infoType];
 							var curVal = mm - min;
 							if (infoType === "amnt")
@@ -119,12 +119,21 @@ var sp = {};
 							$('#syringeProgress').text(
 									curVal + ' (' + percent + '%)');
 
-							if (filling && mm < max) {
+							
+							if (infoType === "amnt" && result['isRunning'] && filling && mm < max) {
 								setTimeout(cls, updateTime, max, true);
-							} else if (!filling && min < mm) {
+							} else if (infoType === "amnt" && result['isRunning'] && !filling && min < mm) {
 								setTimeout(cls, updateTime, max, false);
 							} else {
 
+								if (infoType === "amnt" && !result['isRunning']) {
+									sp
+									.displayMessage(
+											'Syringe pump stopped',
+											'danger');
+									return; // Stop polling
+								} else {
+								
 								var diff = ((new Date().getTime() - startTime) / 1000.0);
 
 								// Round it to nearest hundreth
@@ -138,6 +147,7 @@ var sp = {};
 
 								startTime = null;
 
+								}
 							}
 						}
 					});
@@ -172,7 +182,8 @@ var sp = {};
 
 											sp
 													.displayMessage(
-															'Syringe pump started to load. Sit back and relax...',
+															'Syringe pump started to load ' + $('#loadAmountSpinner')
+															.val() + 'ml. Sit back and relax...',
 															'info');
 
 											sp.checkLevels(300, 0, result.amnt,
@@ -193,15 +204,15 @@ var sp = {};
 				.click(
 						function(event) {
 
+							var toUnloadAmnt = new Number($('#syringeProgress').text().split('(')[0]) * $('#loadAmountSpinner').val();
+							
 							$
 									.ajax({
 										method : "POST",
 										url : "unload",
 										data : {
 											amnt : sp
-													.convertMlToMm($(
-															'#loadAmountSpinner')
-															.val()),
+													.convertMlToMm(toUnloadAmnt),
 											time : $('#unloadTimeSpinner')
 													.val() * 60 * 1000
 										},
@@ -211,7 +222,7 @@ var sp = {};
 
 											sp
 													.displayMessage(
-															'Syringe pump started to unload. Sit back and relax...',
+															'Syringe pump started to unload ' + toUnloadAmnt + 'ml. Sit back and relax...',
 															'info');
 
 											sp.checkLevels(300, 0, result.amnt,

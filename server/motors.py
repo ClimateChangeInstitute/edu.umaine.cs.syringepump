@@ -129,8 +129,6 @@ class MotorEmulator(Motor):
             return
         else:
             self.setIsRunning(True)
-            
-        print "running...."
         
         if Motor.INTERLEAVE == stepstyle:
             steps *= 2
@@ -145,8 +143,6 @@ class MotorEmulator(Motor):
                 time.sleep(sleepAmnt)
             else:
                 return
-            
-        print "Finished...."
             
         self.setIsRunning(False)
         return self.getCurrentstep()

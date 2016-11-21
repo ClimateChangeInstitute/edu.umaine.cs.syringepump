@@ -94,6 +94,15 @@ class SyringePump(object):
         Stop any motor operation.
         '''
         self.motor.setIsRunning(False)
+
+    
+    def isRunning(self):
+        '''
+        @return True IFF the motor is turning
+        '''
+        return self.motor.isRunning()
+    
+    
     
     
     
