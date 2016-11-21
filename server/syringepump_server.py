@@ -107,6 +107,10 @@ def unload():
 def reset():
     syringePump.reset()
     
+@route('/cancel', method='POST')
+def cancel():
+    syringePump.cancel()
+    
 
 @route('/moveSteps', method='POST')
 def moveSteps():

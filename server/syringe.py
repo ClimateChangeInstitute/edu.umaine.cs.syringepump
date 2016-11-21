@@ -87,5 +87,14 @@ class SyringePump(object):
         @param pos_mm: Default value is 0
         '''
         self.motor.setCurrentstep(pos_mm / self.pitch_mm * self.motor.getStepsPerRevolution())
+
+    
+    def cancel(self):
+        '''
+        Stop any motor operation.
+        '''
+        self.motor.setIsRunning(False)
+    
+    
     
         

@@ -18,10 +18,16 @@
 			<span class="glyphicon glyphicon-backward"></span>
 		</button>
 	</div>
-	<div class="col-xs-12 col-sm-2">
+	<!-- <div class="col-xs-12 col-sm-2">
 		<button id="motorReset" type="button" class="btn btn-default col-xs-12"
 			title="Reset home position">
-			<span class="glyphicon glyphicon-refresh"></span>
+			<span class="glyphicon glyphicon-stop"></span>
+		</button>
+	</div> -->
+	<div class="col-xs-12 col-sm-2">
+		<button id="motorStop" type="button" class="btn btn-default col-xs-12"
+			title="Cancel any motor operation">
+			<span class="glyphicon glyphicon-stop"></span>
 		</button>
 	</div>
 	<div class="col-xs-12 col-sm-1">
@@ -90,18 +96,35 @@
 			initStepButton("motorFastForward", 1000);
 			initStepButton("motorStepForward", 2000);
 
-			$('#motorReset').click(function(event) {
-				// time should be in milliseconds
+// 			$('#motorReset').click(function(event) {
+// 				// time should be in milliseconds
+// 				$.ajax({
+// 					method : "POST",
+// 					url : "reset",
+// 					data : { /* No Data */
+// 					},
+// 					success : function(data) {
+// 						sp.displayMessage("Motor position reset to 0.", 'info');
+// 					},
+// 					error : function(msg) {
+// 						console.log('Failed to reset');
+// 					}
+// 				});
+//
+// 			});
+
+
+			$('#motorStop').click(function(event) {
 				$.ajax({
 					method : "POST",
-					url : "reset",
+					url : "cancel",
 					data : { /* No Data */
 					},
 					success : function(data) {
-						sp.displayMessage("Motor position reset to 0.", 'info');
+						sp.displayMessage("Motor operation canceled.", 'info');
 					},
 					error : function(msg) {
-						console.log('Failed to reset');
+						console.log('Failed to cancel the motor');
 					}
 				});
 

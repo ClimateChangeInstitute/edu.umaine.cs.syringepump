@@ -1,4 +1,5 @@
 import serial
+import threading
 import time
 
 
@@ -30,6 +31,9 @@ class Motor(object):
     def __init__(self, initstep, stepsPerRevolution):
         self.reset(initstep)
         self.stepsPerRevolution = stepsPerRevolution
+        self.lock = threading.Lock()
+        with self.lock:
+            self.__isRunning = False
 
     def reset(self, initstep):
         '''
@@ -87,6 +91,14 @@ class Motor(object):
     
     def turnOffMotor(self):
         raise NotImplementedError("Should have implemented this")
+    
+    def isRunning(self):
+        with self.lock:
+            return self.__isRunning
+    
+    def setIsRunning(self, isRunning):
+        with self.lock:
+            self.__isRunning = isRunning
 
 
 class MotorEmulator(Motor):
@@ -113,6 +125,12 @@ class MotorEmulator(Motor):
         return self.getCurrentstep()
 
     def step(self, steps, direction, stepstyle, time_ms, updateSteps=20):
+        if self.isRunning():
+            return
+        else:
+            self.setIsRunning(True)
+            
+        print "running...."
         
         if Motor.INTERLEAVE == stepstyle:
             steps *= 2
@@ -122,9 +140,15 @@ class MotorEmulator(Motor):
         sleepAmnt = time_ms / 1000.0 / steps
         
         for _ in range(steps):
-            self.oneStep(direction, stepstyle)
-            time.sleep(sleepAmnt)
-        
+            if self.isRunning():
+                self.oneStep(direction, stepstyle)
+                time.sleep(sleepAmnt)
+            else:
+                return
+            
+        print "Finished...."
+            
+        self.setIsRunning(False)
         return self.getCurrentstep()
             
     def turnOffMotor(self):
