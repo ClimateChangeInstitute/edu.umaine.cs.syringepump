@@ -1,4 +1,4 @@
-# edu.umaine.cs.syringepump
+# syringepump
 
 A syringe pump controller system for Raspberry Pi and Arduino.
 
