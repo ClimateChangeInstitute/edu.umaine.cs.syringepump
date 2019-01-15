@@ -156,11 +156,10 @@ then changes to syringe and motor gearing may be required.
 
 #### Calibration Settings
 
-These settings directly affect the amount of fluid that is loaded and
-discharged by the syringe pump. Using the calibration page is the
-preferred way to change these settings. By default, the number of
-steps per 1 ml of fluid is 1415. Additional default settings are shown
-in the table below.
+The calibration settings affect the amount of fluid that is loaded and
+discharged by the syringe pump. By default, the number of steps per 1
+ml of fluid is 1415. Additional default settings are shown in the
+table below.
 
 | Setting              | Default Value |
 | -------------------- | -------------:|
@@ -168,10 +167,11 @@ in the table below.
 | Pitch (# mm / 1 rev) |           0.8 |
 | # Steps / 1 rev      |           200 |
 
-The **syringe diameter** should be self explanatory.  The **pitch** is
-the distance that a single rotation of the screw causes the plunger to
-move in millimeters.  The **# steps / 1 rev** is how many motor steps
-it takes to make the screw complete a single revolution.
+The **syringe diameter** is the inner space of the syringe.  The
+**pitch** is the distance that a single rotation of the screw causes
+the plunger to move in millimeters.  The **# steps / 1 rev** is how
+many motor steps it takes to make the screw complete a single
+revolution.
 
 ## License
 
