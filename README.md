@@ -13,7 +13,8 @@ at [RPi2](https://github.com/markroyer/rpi2-adafruit-motor-hat-case).
 ## Setup
 
 The syringe pump control software is written in Python and requires
-Python 2.7 to be installed.
+Python 2.7 to be installed.  The software also requires that the
+`pyserial` library is installed (see below for installation details).
 
 The syringe pump controller can operate in three separate modes: motor
 emulation, Adafruit Motor HAT (via Raspberry Pi or some Linux)
