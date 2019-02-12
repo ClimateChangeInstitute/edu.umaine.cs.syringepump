@@ -1,0 +1,22 @@
+body {
+  padding-top: 5rem;
+}
+
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.input-group-btn-vertical i {
+  position: absolute;
+  top: 0;
+  left: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+.col-xs-12 {
+  margin-top: 10px;
+}
