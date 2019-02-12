@@ -17,7 +17,7 @@ import json
 from bottle import run, request, route, static_file
 
 SYSTEM_PASS = ''  # set this if you want to be able to shutdown the server
-SERVER_PATH = '../client'
+SERVER_PATH = '../client/dist/'
 SETTINGS_FILE = 'settings.json'
 
 
@@ -92,7 +92,9 @@ def unload():
     time = float(request.forms.get('time'))
         
     print "Moving motor %f mm in %f ms" % (amnt, time)
-        
+
+    syringePump.reset(amnt);
+
     syringePump.movePositionAsync(-1 * amnt, time)
     
     obj = {
