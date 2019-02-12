@@ -58,6 +58,29 @@ sudo apt-get install python-serial
 
 This section contains description of standard syringe pump usage.
 
+## Building the Client
+
+The client code is found in the `client/src` directory. The client
+uses [nodejs](https://nodejs.org/) for building and managing
+dependencies.  Typing 
+
+``` bash
+npm install
+```
+
+will install the required JavaScript libraries to the `node_modules`
+directory.
+
+``` bash
+npm run build
+```
+
+Will take the code from the `client/src/` and compile it to the
+`client/dist/` directory where it will be served by the
+`syringepump_server.py`. **DO NOT** directly edit the `/client/dist/`
+since the contents will be overwritten when the project is rebuilt;
+instead, only edit the contents of `client/src/`.
+
 ### Starting the Controller
 
 To start the syringe pump controller, `cd` to the `server` directory
@@ -182,6 +205,6 @@ The project is licensed under the terms of the
 <!--
 
 LocalWords:  Arduino Adafruit RPi cd syringepump py dev WSGIRefServer
-LocalWords:  Ctrl TODO GPL pyserial sudo min rev
+LocalWords:  Ctrl TODO GPL pyserial sudo min rev src nodejs npm
 
 -->
