@@ -38,6 +38,9 @@
               required="required"
               min="0"
               step="any"
+              data-toggle="tooltip"
+              data-placement="auto"
+              title="This amount will be loaded when the load button is pressed."
             />
           </div>
           <div class="col-xs-12 col-sm-3">
@@ -45,7 +48,6 @@
               id="loadButton"
               class="btn btn-default btn-block"
               type="button"
-              data-toggle="tooltip" data-placement="top" title="Tooltip on top"
             >
               Load Syringe!
             </button>
@@ -64,6 +66,9 @@
               required="required"
               min="0"
               step="any"
+              data-toggle="tooltip"
+              data-placement="auto"
+              title="This amount will be used when the unload button is pressed."
             />
           </div>
         </div>
@@ -126,6 +131,9 @@
               id="unloadButton"
               class="btn btn-default btn-block"
               type="button"
+              data-toggle="tooltip"
+              data-placement="auto"
+              title="Unloads the amount shown in current amount."
             >
               Unload Syringe!
             </button>
@@ -140,6 +148,8 @@
                 id="motorStepBackward"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="-2000 steps"
               >
                 <span class="glyphicon glyphicon-step-backward"></span>
@@ -150,6 +160,8 @@
                 id="motorFastBackward"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="-1000 steps"
               >
                 <span class="glyphicon glyphicon-fast-backward"></span>
@@ -160,6 +172,8 @@
                 id="motorBackward"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="-100 steps"
               >
                 <span class="glyphicon glyphicon-backward"></span>
@@ -176,6 +190,8 @@
                 id="stopMotorButton"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="Cancel any motor operation"
               >
                 <span class="glyphicon glyphicon-stop"></span>
@@ -186,6 +202,8 @@
                 id="motorForward"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="100 steps"
               >
                 <span class="glyphicon glyphicon-forward"></span>
@@ -196,6 +214,8 @@
                 id="motorFastForward"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="1000 steps"
               >
                 <span class="glyphicon glyphicon-fast-forward"></span>
@@ -206,6 +226,8 @@
                 id="motorStepForward"
                 type="button"
                 class="btn btn-default col-xs-12"
+                data-toggle="tooltip"
+                data-placement="auto"
                 title="2000 steps"
               >
                 <span class="glyphicon glyphicon-step-forward"></span>
@@ -221,6 +243,9 @@
               class="btn btn-danger"
               type="button"
               data-bb="shutdown"
+              data-toggle="tooltip"
+              data-placement="auto"
+              title="Clicking this will turn off the computer."
             >
               Shutdown Computer
             </button>
@@ -231,7 +256,13 @@
         <!-- *************** BEGIN ADVANCED FEATURES *************** -->
 
         <div class="form-group">
-          <a id="advancedFeatures" class="col-xs-12" href="#"
+          <a
+            id="advancedFeatures"
+            class="col-xs-2"
+            href="#"
+            data-toggle="tooltip"
+            data-placement="right"
+            title="Select only if you know what you are doing."
             >Advanced features</a
           >
         </div>
