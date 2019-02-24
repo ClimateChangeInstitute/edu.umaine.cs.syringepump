@@ -53,12 +53,17 @@ performing an apt update and then installing
 ```bash
 sudo apt-get install python-serial
 ```
+## Dependencies
+```bash
+sudo apt-get install npm
+```
 
 ## Usage
 
 This section contains description of standard syringe pump usage.
 
 ## Building the Client
+cd into client/src directory
 
 The client code is found in the `client/src` directory. The client
 uses [nodejs](https://nodejs.org/) for building and managing
