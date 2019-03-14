@@ -221,7 +221,7 @@ class RaspberryPiMotor(Motor):
         initStep = 0
         motorNum = 1
         super(RaspberryPiMotor, self).__init__(initStep, stepsPerRev)
-        self.motor = Adafruit_MotorHAT().getStepper(stepsPerRev, motorNum)
+        self.motor = Adafruit_MotorHAT(addr=0x70).getStepper(stepsPerRev, motorNum)
         
     def __executeSteps(self, numSteps, stepType, direction, time_ms, updateSteps='20'):
         sign = 1
