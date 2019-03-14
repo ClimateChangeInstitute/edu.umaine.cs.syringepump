@@ -99,6 +99,8 @@ class Motor(object):
     def setIsRunning(self, isRunning):
         with self.lock:
             self.__isRunning = isRunning
+            if not self.__isRunning :
+                self.turnOffMotor()
 
 
 class MotorEmulator(Motor):
@@ -254,7 +256,7 @@ class RaspberryPiMotor(Motor):
     def turnOffMotor(self):
         self.motor.run(Adafruit_MotorHAT.RELEASE)
         
-
+        
 
 # arduino = ArduinoMotor()
 # arduino.movePosition(1, 5000)
