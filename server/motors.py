@@ -224,6 +224,7 @@ class RaspberryPiMotor(Motor):
         self.motor = Adafruit_MotorHAT(addr=0x70).getStepper(stepsPerRev, motorNum)
         
     def __executeSteps(self, numSteps, stepType, direction, time_ms, updateSteps='20'):
+        self.setIsRunning(True)
         sign = 1
         if Motor.BACKWARD == direction:
             sign = -1
@@ -240,6 +241,8 @@ class RaspberryPiMotor(Motor):
         self.motor.step(int(remainingSteps), direction, stepType)
         self.setCurrentstep(self.getCurrentstep() + remainingSteps * sign)
 
+        self.setIsRunning(False)
+        
         return self.getCurrentstep()
             
     def oneStep(self, direction, style):
