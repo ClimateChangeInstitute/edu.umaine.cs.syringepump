@@ -235,13 +235,16 @@ class RaspberryPiMotor(Motor):
 
         revs = int(numSteps / self.getStepsPerRevolution())  
         for _ in range(revs):
+            if not self.isRunning() :
+                break # Request to terminate early
             self.motor.step(int(self.getStepsPerRevolution()), direction, stepType)
             self.setCurrentstep(self.getCurrentstep() + self.getStepsPerRevolution() * sign)
 
         remainingSteps = numSteps - (revs * self.getStepsPerRevolution())
 
-        self.motor.step(int(remainingSteps), direction, stepType)
-        self.setCurrentstep(self.getCurrentstep() + remainingSteps * sign)
+        if self.isRunning() :
+            self.motor.step(int(remainingSteps), direction, stepType)
+            self.setCurrentstep(self.getCurrentstep() + remainingSteps * sign)
 
         self.setIsRunning(False)
         
