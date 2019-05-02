@@ -1,5 +1,5 @@
 {
-  "name": "webpack-demo",
+  "name": "syringepump",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -13,8 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "copy-webpack-plugin": "^4.6.0",
-    "css-loader": "^2.1.0",
-    "eslint": "^5.12.0",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
     "eslint-config-google": "^0.11.0",
     "file-loader": "^3.0.1",
     "html-loader": "^0.5.5",
@@ -22,13 +22,13 @@
     "imports-loader": "^0.8.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
   },
   "dependencies": {
     "bootbox": "^4.4.0",
     "bootstrap": "^3.4.1",
     "bootstrap-wizard": "^1.4.2",
-    "jquery": "^3.3.1"
+    "jquery": "^3.4.1"
   }
 }
