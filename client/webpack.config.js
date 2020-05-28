@@ -23,13 +23,14 @@ module.exports = {
       chunks: ["calibrate"],
       template: "./src/calibrate.html"
     }),
-    new CopyWebpackPlugin([
+    new CopyWebpackPlugin({
+      patterns: [
       {
         from: "src/calibrateStep.html",
         to: "calibrateStep.html",
         toType: "file"
       }
-    ])
+    ]})
   ],
   module: {
     rules: [
